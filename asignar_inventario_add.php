@@ -33,6 +33,9 @@ include_once('config.php');
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
+  <!-- alertify -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!-- =======================================================
   * Template Name: QuickStart
   * Template URL: https://bootstrapmade.com/quickstart-bootstrap-startup-website-template/
@@ -44,17 +47,25 @@ include_once('config.php');
 
 <body class="index-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-      <nav id="navmenu" class="navmenu">
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-    </div>
-  </header>
+  <?php if (isset($_REQUEST['error'])): ?>
+    <script>
+      const mensaje = "<?php echo htmlspecialchars($_REQUEST['error']); ?>";
+      const esError = mensaje.toLowerCase().includes('error');
 
-  <?php
-  require_once('cabecera.php');
-  ?>
+      Swal.fire({
+        title: esError ? '¡Atención!' : '¡Logrado!',
+        text: mensaje,
+        icon: esError ? 'error' : 'success',
+        timer: 5000,
+        showConfirmButton: false,
+        timerProgressBar: true
+      });
+
+      window.history.replaceState({}, document.title, window.location.pathname);
+    </script>
+  <?php endif; ?>
+
+  <?php require_once('cabecera.php'); ?>
 
   <main class="main">
 
@@ -147,7 +158,7 @@ include_once('config.php');
                 <td><?php echo $adi->nombre; ?></td>
                 <td><?php echo $adi->nombre_docente . " " . $adi->apellidos; ?></td>
                 <td>
-                  <!-- <a href="editar_marca.php?id_marca=<?php echo $adi->id_docente_inventario; ?>" title="Editar" class="text-primary"><i class="bi bi-pencil-square"></i></a> -->
+
                   <a href="asignar_inventario_borrar.php?id_docente_inventario=<?php echo $adi->id_docente_inventario; ?>" title="Eliminar" class="btn btn-sm btn-danger text-white" onClick="return confirm('Desea eliminar la asignación?');"><i class="bi bi-trash"></i></a>
                 </td>
               </tr>
