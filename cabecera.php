@@ -20,7 +20,7 @@
             <li class="dropdown"><a href="#"><span>Artículos</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
                 <li><a href="#">Tipo de artículo</a></li>
-                <li><a href="#">Administrar Articulo</a></li>
+                <li><a href="registrar_articulo_add.php">Administrar Articulo</a></li>
               </ul>
             </li>
           </ul>
