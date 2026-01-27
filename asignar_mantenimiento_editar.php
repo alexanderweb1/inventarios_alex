@@ -4,16 +4,16 @@ session_start();
 require_once("db.php");
 include_once('config.php');
 
-// 1. Verificamos si el ID realmente llegó por la URL
+//  Verificamos si el ID realmente llegó por la URL
 if (isset($_REQUEST["id_mantenimiento"]) && !empty($_REQUEST["id_mantenimiento"])) {
   $id_mantenimiento = $_REQUEST["id_mantenimiento"];
 
-  // 2. Usamos una consulta preparada para evitar el error de sintaxis y por seguridad
+  // Usamos una consulta preparada para evitar el error de sintaxis y por seguridad
   $sentencia = $pdo_conn->prepare("SELECT * FROM mantenimiento WHERE id_mantenimiento = :id");
   $sentencia->execute([':id' => $id_mantenimiento]);
   $mantenimiento = $sentencia->fetch(PDO::FETCH_OBJ);
 
-  // 3. Si el ID no existe en la base de datos
+  //  Si el ID no existe en la base de datos
   if (!$mantenimiento) {
     die("Error: El registro de mantenimiento no existe.");
   }
