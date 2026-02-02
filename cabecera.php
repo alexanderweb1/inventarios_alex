@@ -16,6 +16,7 @@
             <li><a href="add_estado.php">Estado</a></li>
             <li><a href="add_modelo.php">Modelo</a></li>
             <li><a href="add_ubica.php">Ubicación</a></li>
+            <li><a href="registrar_docente_add.php">Docente</a></li>
             <li><a href="asignar_mantenimiento_add.php">Mantenimiento</a></li>
             <li class="dropdown"><a href="#"><span>Artículos</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
@@ -29,7 +30,7 @@
         <!-- inventarios -->
         <li class="dropdown"><a href="#"><span>inventario</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
           <ul>
-            <li><a href="add_marca.php">inventario</a></li>
+            <li><a href="inventario_add.php">inventario</a></li>
             <li><a href="asignar_inventario_add.php">Asignar inventario</a></li>
           </ul>
         </li>

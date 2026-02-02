@@ -110,7 +110,8 @@ include_once('config.php');
               <th>Artículo</th>
               <th>Fecha Mantenimiento</th>
               <th>Descripción</th>
-              <th>Estado Ingreso</th>
+              <th>Estado al Ingresar</th>
+              <!-- <th>Fecha de registro</th> -->
               <th>Acciones</th>
             </tr>
           </thead>
