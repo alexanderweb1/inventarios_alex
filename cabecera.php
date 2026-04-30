@@ -40,8 +40,19 @@
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </nav>
     <div class="d-flex align-items-center gap-2">
+      <!-- <a class="btn-getstarted" href="index.html#about">
+        <?php //echo $_SESSION['usuario']->getNombre();
+        ?>
+      </a> -->
+
       <a class="btn-getstarted" href="index.html#about">
-        <?php echo $_SESSION['usuario']->getNombre();
+        <?php
+        // Si existe el usuario, muestra el nombre. Si no, no hagas nada (o pon "Invitado").
+        if (isset($_SESSION['usuario']) && is_object($_SESSION['usuario'])) {
+          echo $_SESSION['usuario']->getNombre();
+        } else {
+          echo " ";
+        }
         ?>
       </a>
       <a onclick=" return confirm('Seguro que quiere cerrar sesión ?')" href="controller_login.php?accion=CERRARCESION" class="btn btn-danger rounded-pill">Cerrar Sesión</a>

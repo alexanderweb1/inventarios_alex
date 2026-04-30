@@ -37,6 +37,7 @@ include_once('config.php');
 </head>
 
 <body class="index-page">
+
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
       <nav id="navmenu" class="navmenu">
@@ -44,7 +45,6 @@ include_once('config.php');
       </nav>
     </div>
   </header>
-
   <main class="main">
 
     <!-- Hero Section -->
