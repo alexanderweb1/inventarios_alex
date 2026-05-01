@@ -40,11 +40,6 @@
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </nav>
     <div class="d-flex align-items-center gap-2">
-      <!-- <a class="btn-getstarted" href="index.html#about">
-        <?php //echo $_SESSION['usuario']->getNombre();
-        ?>
-      </a> -->
-
       <a class="btn-getstarted" href="index.html#about">
         <?php
         // Si existe el usuario, muestra el nombre. Si no, no hagas nada (o pon "Invitado").
