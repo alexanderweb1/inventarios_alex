@@ -32,6 +32,8 @@
           <ul>
             <li><a href="inventario_add.php">inventario</a></li>
             <li><a href="asignar_inventario_add.php">Asignar inventario</a></li>
+            <li><a href="subir_foto.php">Subir Foto</a></li>
+
           </ul>
         </li>
 
