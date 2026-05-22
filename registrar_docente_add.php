@@ -1,8 +1,6 @@
 <?php
-require_once('usuario.php');
-session_start();
-require_once("db.php");
-include_once('config.php');
+    require_once('include/usuario.php');
+    require_once('include/cusuario.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -232,7 +230,7 @@ include_once('config.php');
 
 
                 <!-- BOTONES -->
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                <div class="d-grid gap-2 d-md-flex justify-content-center">
                   <!-- <button type="reset" class="btn btn-secondary px-4">Limpiar</button> -->
                   <button type="submit" class="btn btn-success px-5 shadow">
                     <i class="bi bi-cloud-arrow-up-fill me-2"></i> Registrar Docente

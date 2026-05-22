@@ -1,6 +1,7 @@
 <?php
+    require_once('cusuario.php');
     require_once('usuario.php');
-    session_start();
+  //  session_start();
     require_once("db.php");
     include_once('config.php');
 ?>
@@ -10,7 +11,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Sistema de inventarios - Asignar inventario a docente</title>
+  <title>Sistema de inventarios - Administrar datos de estados </title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -53,16 +54,6 @@
   </header>
 
 <?php 
-  if(isset($_REQUEST["error"])){
-    $error=$_REQUEST["error"];
-    
-?>
-  <script>
-      alert("<?php echo $error?>");
-  </script>
-<?php
-  }
-    
 				require_once('cabecera.php');
 ?>
 
@@ -75,85 +66,59 @@
       </div>
       <div class="container text-center">
         <div class="d-flex flex-column justify-content-center align-items-center">
-          <h1 data-aos="fade-up">Asignar <span>inventario</span></h1>
-          <p data-aos="fade-up" data-aos-delay="100">a docente<br></p>
+          <h1 data-aos="fade-up">Administrar <span>estado</span></h1>
+          <p data-aos="fade-up" data-aos-delay="100">Ingrese los datos del estado<br></p>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-              <form id="form1" name="form1" method="post" action="asignar_inventario_acc.php">
+              <form id="form1" name="form1" method="GET" action="estado_acc.php">
                   <div class="form-group">
-                    <label for="usuario" class="sr-only">Seleccione un invetario:</label>
-                     <select name="id_inventario" id="id_inventario" class="form-select" aria-label="Default select example">
-                      <option value=0 selected>Elija un inventario</option>
-<?php 							
-                        $mar = $pdo->query("SELECT * FROM inventario ");	
-                        $inventario = $mar->fetchAll(PDO::FETCH_OBJ);	
-                        foreach ($inventario as $inv){
-?>
-                          <option value="<?php echo $inv->id_inventario;?>"><?php echo $inv->nombre;?></option>
-<?php                   }?>
-                    </select>
+                    <label for="usuario" class="sr-only">Nombre del estado:</label>
+                    <input required  name="estado" id="estado" class="form-control" placeholder="Ingrese el nombre del estado">
                   </div>
-                  <div class="form-group">
-                    <label for="usuario" class="sr-only">Seleccione un docente:</label>
-                     <select name="id_docente" id="id_docente" class="form-select" aria-label="Default select example">
-                      <option value=0 selected>Elija un docente</option>
-<?php 							
-                        $mar = $pdo->query("SELECT * FROM docente ");	
-                        $docente = $mar->fetchAll(PDO::FETCH_OBJ);	
-                        foreach ($docente as $doc){
-?>
-                          <option value="<?php echo $doc->id_docente;?>"><?php echo $doc->nombre." ".$doc->apellidos;?></option>
-<?php                   }?>
-                    </select>
+                  <div class="form-group mb-4">
+                    <label for="password" class="sr-only">estado:</label><br>
+                    <textarea required id="descripcion" name="descripcion" rows="4" cols="50" placeholder="Ingrese la descripción del estado"></textarea>
                   </div>
-                  <div class="form-group">
-                    <label for="usuario" class="sr-only">Descripción de la asignaci&oacute;n:</label>
-                    <br><textarea required id="descripcion" name="descripcion" rows="3" cols="50" placeholder="Ingrese la descripción de la asignación"></textarea>
-                  </div>
-                  <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Asignar">
+                  
+                  <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Agregar">
                   
                 </form>          
           </div>
         </div>
       </div>
     </section><!-- /Hero Section -->
-     <!-- Services Section -->
+    <!-- Services Section -->
     <section id="services" class="services section light-background">
       <div class="container">
       <table class="table table-bordered table-striped">
               <thead class="thead-dark">
                 <tr class="text-center align-middle">
-                  <th colspan=4>Lista de asignaciones</th>
+                  <th colspan=4>Lista de estados</th>
                 </tr>
                 <tr>
-                  <th>id</th>
-                  <th>Inventario</th>
-                  <th>Docente</th>
+                  <th>Nro</th>
+                  <th>Estado</th>
+                  <th>Descripción</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
 <?php 							
-				  $sql=" SELECT docente_inventario.id_docente_inventario,docente.nombre AS 'nombre_docente',docente.apellidos,inventario.nombre ";
-				  $sql.=" FROM docente_inventario, docente,inventario "; 
-				  $sql.=" WHERE "; 
-				  $sql.=" docente_inventario.id_docente=docente.id_docente AND ";
-				  $sql.=" docente_inventario.id_inventario=inventario.id_inventario  ";
-          //echo "<br>".$sql."<br>";
-            $mar = $pdo->query($sql);	
-						$adocente_inventario = $mar->fetchAll(PDO::FETCH_OBJ);	
-            foreach ($adocente_inventario as $adi){
+						$est = $pdo->query("SELECT * FROM estado ");	
+						$estado = $est->fetchAll(PDO::FETCH_OBJ);	
+            foreach ($estado as $est){
 ?>
                 <tr>
-                  <td><?php echo $adi->id_docente_inventario;?></td>
-                  <td><?php echo $adi->nombre;?></td>
-                  <td><?php echo $adi->nombre_docente." ".$adi->apellidos;?></td>
+                  <td><?php echo $est->id_estado;?></td>
+                  <td><?php echo $est->estado;?></td>
+                  <td><?php echo $est->descripcion;?></td>
                   <td>
-							        <a href="asignar_inventario_borrar.php?id_docente_inventario=<?php echo $adi->id_docente_inventario;?>" class="text-danger" onClick="return confirm('Desea eliminar la asignacion?');"><i class="bi bi-trash3-fill"></i>Borrar</a>                     
+                      <a href="editar_estado.php?id_estado=<?php echo $est->id_estado;?>" class="text-primary"><i class="fa fa-fw fa-edit"></i> Editar</a> | 
+							        <a href="delete_estado.php?id_estado=<?php echo $est->id_estado;?>" class="text-danger" onClick="return confirm('Desea eliminar el estado?');"><i class="fa fa-fw fa-trash"></i> Eliminar</a>                     
                   </td>
                 </tr>
- <?php 
+  <?php 
             }
- ?>             
+  ?>             
               </tbody>
       </table>
 		

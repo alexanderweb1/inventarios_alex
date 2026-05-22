@@ -8,7 +8,7 @@ include_once('config.php');
 if (isset($_REQUEST["id_mantenimiento"]) && !empty($_REQUEST["id_mantenimiento"])) {
   $id_mantenimiento = $_REQUEST["id_mantenimiento"];
 
-  // Usamos una consulta preparada para evitar el error de sintaxis y por seguridad
+  // 2. Usamos una consulta preparada para evitar el error de sintaxis y por seguridad
   $sentencia = $pdo_conn->prepare("SELECT * FROM mantenimiento WHERE id_mantenimiento = :id");
   $sentencia->execute([':id' => $id_mantenimiento]);
   $mantenimiento = $sentencia->fetch(PDO::FETCH_OBJ);

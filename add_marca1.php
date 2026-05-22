@@ -10,7 +10,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Sistema de inventarios - Ingreso usuarios </title>
+  <title>Sistema de inventarios - Administrar datos de marcas </title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -51,7 +51,9 @@
       </nav>
     </div>
   </header>
-
+<?php 
+  require_once('cabecera.php');
+?>
   <main class="main">
 
     <!-- Hero Section -->
@@ -61,30 +63,66 @@
       </div>
       <div class="container text-center">
         <div class="d-flex flex-column justify-content-center align-items-center">
-          <h1 data-aos="fade-up">Ingreso al sistema <span>Inventarios</span></h1>
-          <p data-aos="fade-up" data-aos-delay="100">Utilice un usuario valido<br></p>
+          <h1 data-aos="fade-up">Administrar <span>marca</span></h1>
+          <p data-aos="fade-up" data-aos-delay="100">Ingrese los datos de la marca<br></p>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-              <form id="form1" name="form1" method="post" action="controller_login.php">
+              <form id="form1" name="form1" method="post" action="marca_acc.php">
                   <div class="form-group">
-                    <label for="usuario" class="sr-only">Usuario</label>
-                    <input  name="usuario" id="usuario" class="form-control" placeholder="Ingrese su usuario">
+                    <label for="usuario" class="sr-only">Nombre de marca:</label>
+                    <input  name="nombre" id="nombre" class="form-control" placeholder="Ingrese el nombre de la marca">
                   </div>
                   <div class="form-group mb-4">
-                    <label for="password" class="sr-only">Clave</label>
-                    <input name="clave" type="password" id="clave" class="form-control" placeholder="***********">
-                    <input name="entrar" type="hidden" id="entrar" value="entrar" />
-                    <input name="tipo" type="hidden" id="tipo" value="DOCENTE" />
+                    <label for="password" class="sr-only">Descripción:</label><br>
+                    <textarea id="descripcion" name="descripcion" rows="4" cols="50" placeholder="Ingrese la descripción de la marca"></textarea>
                   </div>
-                  
-                  <input name="login" id="login" class="btn btn-block login-btn mb-4" type="submit" value="Ingresar">
-                  
+                  <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Agregar">               
                 </form>          
           </div>
         </div>
       </div>
-
     </section><!-- /Hero Section -->
+<!-- Contact Section -->
+    <section id="contact" class="contact section">
+      <!-- Section Title -->
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <table class="table table-bordered table-striped">
+              <thead class="thead-dark">
+                <tr class="text-center align-middle">
+                  <th colspan=4>Lista de marcas</th>
+                </tr>
+                <tr>
+                  <th>Nro</th>
+                  <th>Nombre</th>
+                  <th>Descripci&oacute;n</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+<?php 							
+						$est = $pdo->query("SELECT * FROM  marca ");	
+						$marca = $est->fetchAll(PDO::FETCH_OBJ);	
+					// print_r($especialidades);
+          $i=1;
+			      foreach ($marca as $m){
+              
+?>
+                <tr>
+                  <td><?php echo  $i++ ?></td>
+                  <td><?php echo  $m->nombre ?> </td>
+                  <td><?php echo  $m->descripcion ?></td>
+                  <td>
+                      <a href="edit-marca.php?editId=<?php echo $val['id_registro'];?>" class="text-primary"><i class="fa fa-fw fa-edit"></i> Editar</a> | 
+							        <a href="delete_marca.php?id_marca=<?php echo $m->id_marca;?>" class="text-danger" onClick="return confirm('Are you sure to delete this user?');"><i class="fa fa-fw fa-trash"></i> Eliminar</a>| 
+                  </td>
+                </tr>
+<?php 							         
+            }
+?>
 
+              </tbody>
+            </table>
+      </div>
+    </section><!-- /Contact Section -->
     
 
   </main>

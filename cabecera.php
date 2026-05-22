@@ -2,41 +2,37 @@
   <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
     <a href="index.html" class="logo d-flex align-items-center me-auto">
-      <img src="assets/img/logo1.png" alt="">
-      <h1 class="sitename">ISTMS</h1>
+      <img src="assets/img/logo.png" alt="">
+      <h1 class="sitename">Inventarios ISTMS</h1>
     </a>
 
     <nav id="navmenu" class="navmenu">
       <ul>
         <li><a href="index.php" class="active">Inicio</a></li>
-        <!-- marcas -->
         <li class="dropdown"><a href="#"><span>Ficheros</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
           <ul>
             <li><a href="add_marca.php">Marca</a></li>
             <li><a href="add_estado.php">Estado</a></li>
             <li><a href="add_modelo.php">Modelo</a></li>
-            <li><a href="add_ubica.php">Ubicación</a></li>
+            <li><a href="registrar_ubicacion_add.php">Ubicación</a></li>
             <li><a href="registrar_docente_add.php">Docente</a></li>
-            <li><a href="asignar_mantenimiento_add.php">Mantenimiento</a></li>
-            <li class="dropdown"><a href="#"><span>Artículos</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <li class="dropdown"><a href="#"><span>Artículo</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
-                <li><a href="#">Tipo de artículo</a></li>
-                <li><a href="registrar_articulo_add.php">Administrar Articulo</a></li>
+                <li><a href="add_tarticulo.php">Tipo de artículo</a></li>
+                <li><a href="articulo.php">Adminstrar artículo</a></li>
+
               </ul>
             </li>
           </ul>
         </li>
-
-        <!-- inventarios -->
-        <li class="dropdown"><a href="#"><span>inventario</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+        <li class="dropdown"><a href="#"><span>Inventario</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
           <ul>
-            <li><a href="inventario_add.php">inventario</a></li>
-            <li><a href="asignar_inventario_add.php">Asignar inventario</a></li>
-            <li><a href="subir_foto.php">Subir Foto</a></li>
+            <li><a href="inventario_add.php">Inventario</a></li>
+            <li><a href="asignar_inventario_addJQ.php">Asignar inventario</a></li>
+            <li><a href="asignar_mantenimiento_add.php">Mantenimiento de equipo</a></li>
 
           </ul>
         </li>
-
         <li><a href="index.html#contact">Contacto</a></li>
       </ul>
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -44,15 +40,14 @@
     <div class="d-flex align-items-center gap-2">
       <a class="btn-getstarted" href="index.html#about">
         <?php
-        // Si existe el usuario, muestra el nombre. Si no, no hagas nada (o pon "Invitado").
-        if (isset($_SESSION['usuario']) && is_object($_SESSION['usuario'])) {
-          echo $_SESSION['usuario']->getNombre();
+        if (!isset($_SESSION['usuario'])) {
         } else {
-          echo " ";
+          echo $_SESSION['usuario']->getNombre();
         }
         ?>
       </a>
-      <a onclick=" return confirm('Seguro que quiere cerrar sesión ?')" href="controller_login.php?accion=CERRARCESION" class="btn btn-danger rounded-pill">Cerrar Sesión</a>
+      <a class="btn btn-danger rounded-pill m-2" onClick="return confirm('¿ Seguro que quiere cerrar seciòn ?');" href="controller_login.php?accion=CERRARCESION" class="btn btn-danger"><span class="icon-off">Cerrar Sesión</span></a>
     </div>
+
   </div>
 </header>

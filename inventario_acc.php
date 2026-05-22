@@ -20,7 +20,7 @@ if ($accion == "EDITAR") {
         exit;
     }
 } else {
-    $sql = "INSERT INTO inventario ( nombre, descripcion, fecha) VALUES ( :nombre, :descripcion);";
+    $sql = "INSERT INTO inventario ( nombre, descripcion) VALUES ( :nombre, :descripcion);";
     $pdo_statement = $pdo_conn->prepare($sql);
     $result = $pdo_statement->execute(array(':nombre' => $nombre, ':descripcion' => $descripcion));
     if (!empty($result)) {

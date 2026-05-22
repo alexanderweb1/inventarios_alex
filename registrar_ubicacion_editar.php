@@ -1,24 +1,28 @@
 <?php
     require_once('usuario.php');
     session_start();
-    if (!isset($_SESSION['usuario'])) {
-      header('Location: ingreso_usuarios.php');
-    }else{
-      //echo "no entro";
-      //return;
+    require_once("db.php");
+    include_once('config.php');
+    $id_ubicacion=$_REQUEST["id_ubicacion"];
+    
+    $ubi = $pdo_conn->query("SELECT * FROM ubicacion WHERE id_ubicacion=$id_ubicacion; ");	
+    $ubicacion= $ubi->fetchAll(PDO::FETCH_OBJ);
+    foreach ($ubicacion as $ubi){
+      $id_ubicacion=$ubi->id_ubicacion;   
+      $nombre=$ubi->nombre;
+      $descripcion=$ubi->descripcion;
+      $fecha = date("Y-m-d", strtotime($ubi->fecha));
     }
-    //echo "<br>***********Usuario:".$_SESSION['usuario']."<br>";
 
-      require_once("db.php");
-      include_once('config.php');
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - QuickStart Bootstrap Template</title>
+  <title>Sistema de inventarios - Editar ubicacion </title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -51,10 +55,12 @@
 </head>
 
 <body class="index-page">
-  
+
+
 <?php 
-  require_once('cabecera.php');
+				require_once('cabecera.php');
 ?>
+
   <main class="main">
 
     <!-- Hero Section -->
@@ -64,24 +70,38 @@
       </div>
       <div class="container text-center">
         <div class="d-flex flex-column justify-content-center align-items-center">
-          <h1 data-aos="fade-up">Welcome to <span>QuickStart</span></h1>
-          <p data-aos="fade-up" data-aos-delay="100">Quickly start your project now and set the stage for success<br></p>
+          <h1 data-aos="fade-up">Editar <span>ubicacion</span></h1>
+          <p data-aos="fade-up" data-aos-delay="100">Ingrese los datos nuevos de la ubicacion<br></p>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-            <a href="#about" class="btn-get-started">Get Started</a>
-            <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+              <form id="form1" name="form1" method="post" action="registrar_ubicacion_acc.php">
+                  <div class="form-group">
+                    <label for="usuario" class="sr-only">Nombre de ubicacion:</label>
+                    <input required  name="nombre" id="nombre" class="form-control" value="<?php echo $nombre;?>" placeholder="Ingrese el nombre de la marca">
+                    <input type=hidden name="id_ubicacion" id="id_ubicacion"  value="<?php echo $id_ubicacion; ?>" >
+                    <input type=hidden name="accion" id="accion"  value="EDITAR" >
+                  </div>
+                  <div class="form-group">
+                    <label for="password" class="sr-only">Descripción de la ubicación:</label><br>
+                    <textarea required id="descripcion" name="descripcion" rows="4" cols="50" placeholder="Ingrese la descripción de la marca"><?php echo $descripcion;?></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="fecha" class="form-label">Fecha de la ubicación:</label>
+                    <input type="date" name="fecha" id="fecha" value="<?php echo $fecha; ?>" class="form-control" required>
+                  </div>
+                  
+                  <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Actualizar">
+                  
+                </form>          
           </div>
-          <img src="assets/img/hero-services-img.webp" class="img-fluid hero-img" alt="" data-aos="zoom-out" data-aos-delay="300">
         </div>
       </div>
-
     </section><!-- /Hero Section -->
-
-   
-
   </main>
 <?php
   require_once('pie.php');
 ?>
+
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

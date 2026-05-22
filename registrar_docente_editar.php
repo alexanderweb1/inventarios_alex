@@ -14,7 +14,7 @@ $docente = $stmt->fetch(PDO::FETCH_OBJ);
 
 // Si no existe el docente, redirigir
 if (!$docente) {
-    header("Location: agregar_docente_add.php");
+    header("Location: registrar_docente_add.php");
     exit();
 }
 ?>
@@ -198,10 +198,8 @@ if (!$docente) {
                             </div>
 
                             <!-- BOTONES -->
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-4">
-                                <a href="registrar_docente_add.php" class="btn btn-secondary px-4">
-                                    <i class="bi bi-arrow-left me-2"></i> Volver
-                                </a>
+                            <div class="d-grid gap-2 d-md-flex justify-content-center mt-4">
+                                
                                 <button type="submit" class="btn btn-primary px-5 shadow">
                                     <i class="bi bi-save me-2"></i> Actualizar Docente
                                 </button>

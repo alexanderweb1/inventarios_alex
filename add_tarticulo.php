@@ -2,38 +2,33 @@
 require_once('include/usuario.php');
 require_once('include/cusuario.php');
 
-$id_articulo = $_REQUEST["id_articulo"];
-
-echo "<br>id_articulo>$id_articulo";
-
 if (isset($_REQUEST['submit']) and $_REQUEST['submit'] != "") {
   extract($_REQUEST);
-  echo "<br>Modelo:" . $modelo;
 
   if ($accion == "EDITAR") {
     $data  =  array(
-      'modelo' => $modelo,
+      'tipo_articulo' => $tipo_articulo,
     );
-    $update  =  $db->update('modelo', $data, array('id_modelo' => $id_modelo));
+    $update  =  $db->update('tipo_articulo', $data, array('id_tipo_articulo' => $id_tipo_articulo));
     if ($insert) {
-      header('location:add_modelo.php?msg=edi');
+      header('location:add_tarticulo.php?msg=edi');
       exit;
     } else {
-      header('location:add_modelo.php?msg=nedi');
+      header('location:add_tarticulo.php?msg=nedi');
       exit;
     }
     return;
   } else {
     $data  =  array(
-      'modelo' => trim($modelo),
+      'tipo_articulo' => trim($tipo_articulo),
     );
-    $insert  =  $db->insert('modelo', $data);
+    $insert  =  $db->insert('tipo_articulo', $data);
 
     if ($insert) {
-      header('location:add_modelo.php?msg=ras');
+      header('location:add_tarticulo.php?msg=ras');
       exit;
     } else {
-      header('location:add_modelo.php?msg=rna');
+      header('location:add_tarticulo.php?msg=rna');
       exit;
     }
   }
@@ -44,20 +39,19 @@ if (isset($_REQUEST['accion']) and $_REQUEST['accion'] != "") {
   echo "<br>accion:" . $accion;
   if ($accion == "ELIMINAR") {
     $data  =  array(
-      'id_foto' => trim($id_foto),
+      'id_tipo_articulo' => trim($id_tipo_articulo),
     );
-    $delete  =  $db->delete('foto', $data);
-    $name = $_REQUEST["name"];
-    unlink("C:\\xampp\\htdocs\\inventarios\\fotos\\" . $name);
-    unlink($_ruta);
-
+    $delete  =  $db->delete('tipo_articulo', $data);
     if ($delete) {
-      header('location:subir_foto.php?id_articulo=' . $_REQUEST["id_articulo"] . '&msg=del');
+      header('location:add_tarticulo.php?msg=del');
       exit;
     } else {
-      header('location:subir_foto.php?id_articulo=' . $_REQUEST["id_articulo"] . '&msg=undel');
+      header('location:add_tarticulo.php?msg=undel');
       exit;
     }
+  }
+  if ($accion == "EDITAR") {
+    $row_edit  =  $db->getAllRecords('tipo_articulo', '*', ' AND id_tipo_articulo="' . $_REQUEST['id_tipo_articulo'] . '"');
   }
 } else {
   $accion = "";
@@ -71,7 +65,7 @@ if (isset($_REQUEST['accion']) and $_REQUEST['accion'] != "") {
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Sistema de inventarios - Subir foto de artículo] </title>
+  <title>Sistema de inventarios - Administrar tipos de artículo </title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -130,15 +124,36 @@ if (isset($_REQUEST['accion']) and $_REQUEST['accion'] != "") {
             echo  '<div class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i> Record not added <strong>Please try again!</strong></div>';
           }
           ?>
-          <h1 data-aos="fade-up">Administrar <span>fotos de artículos</span></h1>
-          <p data-aos="fade-up" data-aos-delay="100">Subir imagen de artículo<br></p>
+          <h1 data-aos="fade-up">Administrar <span>Tipo de Artículo</span></h1>
+          <p data-aos="fade-up" data-aos-delay="100">Ingrese los datos del tipo de artículo<br></p>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-            <form id="form1" name="form1" method="post" enctype="multipart/form-data" action="upload_foto.php">
+            <form id="form1" name="form1" method="post">
               <div class="form-group">
-                <label for="usuario" class="sr-only">Elegir foto de artículo:</label>
-                <input required type="file" name="files[]" multiple class="custom-file-input" id="customFile">
-                <input type="text" name="id_articulo" id="id_articulo" value="<?php echo $id_articulo; ?>">
-
+                <label for="usuario" class="sr-only">Tipo de artículo:</label>
+                <input type="hidden" name="id_tipo_articulo" id="id_tipo_articulo"
+                  <?php
+                  if ($accion == "EDITAR") {
+                    echo "value='" . $_REQUEST['id_tipo_articulo'] . "'";
+                  } else {
+                    echo "value=''";
+                  }
+                  ?>>
+                <input type="hidden" name="accion" id="accion"
+                  <?php
+                  if ($accion == "EDITAR") {
+                    echo "value='EDITAR'";
+                  } else {
+                    echo "value=''";
+                  }
+                  ?>>
+                <input required name="tipo_articulo" id="tipo_articulo" class="form-control" placeholder="Ingrese el tipo de artículo"
+                  <?php
+                  if ($accion == "EDITAR") {
+                    echo "value='" . $row_edit[0]['tipo_articulo'] . "'";
+                  } else {
+                    echo "value=''";
+                  }
+                  ?>>
               </div>
               <div class="form-group mb-4">
               </div>
@@ -156,32 +171,30 @@ if (isset($_REQUEST['accion']) and $_REQUEST['accion'] != "") {
         <table class="table table-bordered table-striped">
           <thead class="thead-dark">
             <tr class="text-center align-middle">
-              <th colspan=4>Lista de Imágenes</th>
+              <th colspan=4>Lista de tipos de artículo</th>
             </tr>
             <tr>
               <th>Nro</th>
-              <th>Nombre</th>
-              <th>Descripci&oacute;n</th>
+              <th>Id.</th>
+              <th>Tipo de artículo</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             <?php
-
-            $row_modelo  =  $db->getAllRecords('foto', '*', " AND id_articulo=$id_articulo ");
-            if ($row_modelo) {
-              foreach ($row_modelo as $m) {
+            $row_tipo_articulo  =  $db->getAllRecords('tipo_articulo', '*', ' ');
+            foreach ($row_tipo_articulo as $ta) {
             ?>
-                <tr>
-                  <td><?php echo $m['id_foto']; ?></td>
-                  <td><a target="_blank" href="fotos/<?php echo $m['ruta']; ?>"><?php echo $m['ruta']; ?></a></td>
-                  <td></td>
-                  <td>
-                    <a href="subir_foto.php?accion=ELIMINAR&id_articulo=<?php echo $m['id_articulo']; ?>&name=<?php echo $m['ruta']; ?>&id_foto=<?php echo $m['id_foto']; ?>" class="text-danger" onClick="return confirm('Desea eliminar la marca?');"><i class="bi bi-trash3-fill"></i>Borrar</a>
-                  </td>
-                </tr>
+              <tr>
+                <td><?php echo $ta['id_tipo_articulo']; ?></td>
+                <td><?php echo $ta['tipo_articulo']; ?></td>
+                <td></td>
+                <td>
+                  <a href="add_tarticulo.php?accion=EDITAR&id_tipo_articulo=<?php echo $ta['id_tipo_articulo']; ?>" class="text-primary"><i class="bi bi-pencil-square"></i>Editar</a>
+                  <a href="add_tarticulo.php?accion=ELIMINAR&id_tipo_articulo=<?php echo $ta['id_tipo_articulo']; ?>" class="text-danger" onClick="return confirm('Desea eliminar?');"><i class="bi bi-trash3-fill"></i>Borrar</a>
+                </td>
+              </tr>
             <?php
-              }
             }
             ?>
           </tbody>

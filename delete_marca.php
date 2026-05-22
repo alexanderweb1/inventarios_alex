@@ -1,5 +1,6 @@
 <?php
-    require_once("db.php");
+   require_once('cusuario.php');
+   require_once("db.php");
     $id_marca=$_REQUEST["id_marca"];
     echo "<br>id_marca:$id_marca"; 
 

@@ -10,7 +10,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Sistema de inventarios - Asignar inventario a docente</title>
+  <title>Sistema de inventarios - Asignar inventario a docente </title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -52,17 +52,16 @@
     </div>
   </header>
 
-<?php 
-  if(isset($_REQUEST["error"])){
-    $error=$_REQUEST["error"];
-    
+<?php
+if(isset($_REQUEST["error"])){
+  $error=$_REQUEST["error"];
+
 ?>
   <script>
-      alert("<?php echo $error?>");
+    alert("Error,<?php echo $error?>")
   </script>
 <?php
-  }
-    
+}
 				require_once('cabecera.php');
 ?>
 
@@ -80,34 +79,37 @@
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
               <form id="form1" name="form1" method="post" action="asignar_inventario_acc.php">
                   <div class="form-group">
-                    <label for="usuario" class="sr-only">Seleccione un invetario:</label>
-                     <select name="id_inventario" id="id_inventario" class="form-select" aria-label="Default select example">
+                    <label for="usuario" class="sr-only">Seleccione un inventario:</label>
+                    <select name="id_inventario" id="id_inventario" class="form-select" aria-label="Default select example">
                       <option value=0 selected>Elija un inventario</option>
 <?php 							
-                        $mar = $pdo->query("SELECT * FROM inventario ");	
+						            $mar = $pdo->query("SELECT * FROM inventario ");	
                         $inventario = $mar->fetchAll(PDO::FETCH_OBJ);	
                         foreach ($inventario as $inv){
 ?>
                           <option value="<?php echo $inv->id_inventario;?>"><?php echo $inv->nombre;?></option>
-<?php                   }?>
+<?php                    }
+?>
                     </select>
                   </div>
-                  <div class="form-group">
+                    <div class="form-group">
                     <label for="usuario" class="sr-only">Seleccione un docente:</label>
-                     <select name="id_docente" id="id_docente" class="form-select" aria-label="Default select example">
+                    <select name="id_docente" id= "id_docente" class="form-select" aria-label="Default select example">
                       <option value=0 selected>Elija un docente</option>
 <?php 							
-                        $mar = $pdo->query("SELECT * FROM docente ");	
+						            $mar = $pdo->query("SELECT * FROM docente ");	
                         $docente = $mar->fetchAll(PDO::FETCH_OBJ);	
                         foreach ($docente as $doc){
 ?>
-                          <option value="<?php echo $doc->id_docente;?>"><?php echo $doc->nombre." ".$doc->apellidos;?></option>
-<?php                   }?>
+                          <option value="<?php echo $doc->id_docente;?>"><?php echo $doc->nombre."".$doc->apellidos;?></option>
+<?php                    }
+?>
                     </select>
                   </div>
-                  <div class="form-group">
-                    <label for="usuario" class="sr-only">Descripción de la asignaci&oacute;n:</label>
-                    <br><textarea required id="descripcion" name="descripcion" rows="3" cols="50" placeholder="Ingrese la descripción de la asignación"></textarea>
+                  </div>
+                    <div class="form-group">
+                    <label for="usuario" class="sr-only">Descripci&oacute;n de la asignaci&oacute;n:</label>
+                    <br><textarea required id="descripcion" name="descripcion" rows="3" cols="50" placeholder="Ingrese la descripción de la asignaci&oacute;n"></textarea>
                   </div>
                   <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Asignar">
                   
@@ -116,7 +118,7 @@
         </div>
       </div>
     </section><!-- /Hero Section -->
-     <!-- Services Section -->
+    <!-- Services Section -->
     <section id="services" class="services section light-background">
       <div class="container">
       <table class="table table-bordered table-striped">
@@ -132,28 +134,28 @@
                 </tr>
               </thead>
               <tbody>
-<?php 							
-				  $sql=" SELECT docente_inventario.id_docente_inventario,docente.nombre AS 'nombre_docente',docente.apellidos,inventario.nombre ";
-				  $sql.=" FROM docente_inventario, docente,inventario "; 
-				  $sql.=" WHERE "; 
-				  $sql.=" docente_inventario.id_docente=docente.id_docente AND ";
-				  $sql.=" docente_inventario.id_inventario=inventario.id_inventario  ";
-          //echo "<br>".$sql."<br>";
-            $mar = $pdo->query($sql);	
+<?php 	
+            $sql=" SELECT docente_inventario.id_docente_inventario,docente.nombre AS 'nombre_docente',docente.apellidos,inventario.nombre ";
+            $sql.=" FROM docente_inventario, docente,inventario ";
+            $sql.=" WHERE ";
+            $sql.=" docente_inventario.id_docente=docente.id_docente AND ";
+            $sql.=" docente_inventario.id_inventario=inventario.id_inventario  ";
+            //echo "<br>".$sql."<br>";
+						$mar = $pdo->query($sql);	
 						$adocente_inventario = $mar->fetchAll(PDO::FETCH_OBJ);	
             foreach ($adocente_inventario as $adi){
 ?>
                 <tr>
                   <td><?php echo $adi->id_docente_inventario;?></td>
                   <td><?php echo $adi->nombre;?></td>
-                  <td><?php echo $adi->nombre_docente." ".$adi->apellidos;?></td>
+                  <td><?php echo $adi->nombre_docente."".$adi->apellidos;?></td>
                   <td>
-							        <a href="asignar_inventario_borrar.php?id_docente_inventario=<?php echo $adi->id_docente_inventario;?>" class="text-danger" onClick="return confirm('Desea eliminar la asignacion?');"><i class="bi bi-trash3-fill"></i>Borrar</a>                     
+                      <a href="asignar_inventario_borrar.php?id_docente_inventario=<?php echo $adi->id_docente_inventario;?>" class="text-danger" onClick="return confirm('Desea eliminar la asignacion?');"><i class="fa fa-fw fa-trash"></i> Eliminar</a>                     
                   </td>
                 </tr>
- <?php 
+  <?php 
             }
- ?>             
+  ?>             
               </tbody>
       </table>
 		

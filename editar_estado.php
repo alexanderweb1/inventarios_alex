@@ -1,16 +1,16 @@
 <?php
     require_once('usuario.php');
     session_start();
-    if (!isset($_SESSION['usuario'])) {
-      header('Location: ingreso_usuarios.php');
-    }else{
-      //echo "no entro";
-      //return;
+    require_once("db.php");
+    include_once('config.php');
+    $id_estado=$_REQUEST["id_estado"];
+    
+    $est = $pdo->query("SELECT * FROM estado WHERE id_estado=$id_estado; ");	
+    $estado = $est->fetchAll(PDO::FETCH_OBJ);	
+    foreach ($estado as $est){   
+      //$nombre=$est->nombre;
+      $estado=$est->estado;
     }
-    //echo "<br>***********Usuario:".$_SESSION['usuario']."<br>";
-
-      require_once("db.php");
-      include_once('config.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +18,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - QuickStart Bootstrap Template</title>
+  <title>Sistema de inventarios - Editar estados </title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -51,10 +51,19 @@
 </head>
 
 <body class="index-page">
-  
+
+<header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+      <nav id="navmenu" class="navmenu">
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </header>
+
 <?php 
-  require_once('cabecera.php');
+				require_once('cabecera.php');
 ?>
+
   <main class="main">
 
     <!-- Hero Section -->
@@ -64,24 +73,32 @@
       </div>
       <div class="container text-center">
         <div class="d-flex flex-column justify-content-center align-items-center">
-          <h1 data-aos="fade-up">Welcome to <span>QuickStart</span></h1>
-          <p data-aos="fade-up" data-aos-delay="100">Quickly start your project now and set the stage for success<br></p>
+          <h1 data-aos="fade-up">Editar <span>estado</span></h1>
+          <p data-aos="fade-up" data-aos-delay="100">Ingrese los datos nuevos del estado<br></p>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-            <a href="#about" class="btn-get-started">Get Started</a>
-            <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+              <form id="form1" name="form1" method="post" action="estado_acc.php">
+                  <div class="form-group">
+                    <label for="usuario" class="sr-only">Nombre del estado:</label>
+                    <input required  name="estado" id="estado" class="form-control" value=<?php echo $estado;?> placeholder="Ingrese el nombre del estado">
+                    <input type=hidden name="id_estado" id="id_estado"  value="<?php echo $id_estado; ?>" >
+                    <input type=hidden name="accion" id="accion"  value="EDITAR" >
+                  </div>
+                  <div class="form-group mb-4">
+                    <label for="password" class="sr-only">estado:</label><br>
+                    <textarea required id="descripcion" name="descripcion" rows="4" cols="50" placeholder="Ingrese la descripción del estado"></textarea>
+                  </div>                  
+                  <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Actualizar">
+                  
+                </form>          
           </div>
-          <img src="assets/img/hero-services-img.webp" class="img-fluid hero-img" alt="" data-aos="zoom-out" data-aos-delay="300">
         </div>
       </div>
-
     </section><!-- /Hero Section -->
-
-   
-
   </main>
 <?php
   require_once('pie.php');
 ?>
+
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

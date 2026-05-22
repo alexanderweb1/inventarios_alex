@@ -1,83 +1,84 @@
-<?php
-require_once('conexion.php');
-require_once('usuario.php');
-class CrudUsuario
-{
+<?php 
+	require_once('conexion.php');
+	require_once('usuario.php');
+	class CrudUsuario{
 
-	public function __construct() {}
+		public function __construct(){}
 
-	//inserta los datos del usuario
-	public function insertar($usuario)
-	{
-		$db = DB::conectar();
-		$insert = $db->prepare('INSERT INTO USUARIOS VALUES(NULL,:nombre, :clave)');
-		$insert->bindValue('nombre', $usuario->getNombre());
-		//encripta la clave
-		$pass = password_hash($usuario->getClave(), PASSWORD_DEFAULT);
-		$insert->bindValue('clave', $pass);
-		$insert->execute();
-	}
+		//inserta los datos del usuario
+		public function insertar($usuario){
+			$db=DB::conectar();
+			$insert=$db->prepare('INSERT INTO USUARIOS VALUES(NULL,:nombre, :clave)');
+			$insert->bindValue('nombre',$usuario->getNombre());
+			//encripta la clave
+			$pass=password_hash($usuario->getClave(),PASSWORD_DEFAULT);
+			$insert->bindValue('clave',$pass);
+			$insert->execute();
+		}
 
-	//obtiene el usuario para el login
-	public function obtenerUsuario($nombre, $clave, $tipo)
-	{
+		//obtiene el usuario para el login
+		public function obtenerUsuario($nombre,$clave,$tipo){
 
 		//echo "Nombre;".$nombre." Clave:".$clave." Tipo:".$tipo;
+		
+			if($tipo=='DOCENTE')
+			{	
+				$db=Db::conectar();
+				$select=$db->prepare("SELECT * FROM docente WHERE docente.estado='ACTIVO' AND usuario=:nombre ");//AND clave=:clave
+				$select->bindValue('nombre',$nombre);			
+				$select->execute();
+				$registro=$select->fetch();
+				$usuario=new Usuario();
 
-		if ($tipo == 'DOCENTE') {
-			$db = Db::conectar();
-			$select = $db->prepare("SELECT * FROM docente WHERE docente.estado='ACTIVO' AND usuario=:nombre "); //AND clave=:clave
-			$select->bindValue('nombre', $nombre);
-			$select->execute();
-			$registro = $select->fetch();
-			$usuario = new Usuario();
-
-			//verifica si la clave es conrrecta
-			if (password_verify($clave, $registro['clave'])) {
-				//si es correcta, asigna los valores que trae desde la base de datos
-				$usuario->setId($registro['id_docente']);
-				$usuario->setNombre($registro['nombre'] . " " . $registro['apellidos']);
-				$usuario->setClave($registro['clave']);
-				$usuario->setTipo("DOCENTE");
-			} else {
-				//echo "<br>Clave incorrecta<br>";
-				return null;
+				//verifica si la clave es conrrecta
+				if (password_verify($clave, $registro['clave'])) {				
+					//si es correcta, asigna los valores que trae desde la base de datos
+					$usuario->setId($registro['id_docente']);
+					$usuario->setNombre($registro['nombre']." ".$registro['apellidos']);
+					$usuario->setClave($registro['clave']);
+					$usuario->setTipo("DOCENTE");
+				}
+				else{
+					//echo "<br>Clave incorrecta<br>";
+					return null;
+				}	
 			}
-		} else {
+			else
+			{
 
-			$db = Db::conectar();
-			$select = $db->prepare('SELECT * FROM docente WHERE usuario=:nombre '); //AND clave=:clave
-			$select->bindValue('nombre', $nombre);
-			$select->execute();
-			$registro = $select->fetch();
-			$usuario = new Usuario();
-			echo "<br>Clave:" . $clave . "=" . $registro['clave'] . "<br>";
-			return;
-			//verifica si la clave es conrrecta
-			if (password_verify($clave, $registro['clave'])) {
-				//si es correcta, asigna los valores que trae desde la base de datos
-				$usuario->setId($registro['Id']);
-				$usuario->setNombre($registro['nombre']);
-				$usuario->setClave($registro['clave']);
-				$usuario->setTipo("DOCENTE");
+				$db=Db::conectar();
+				$select=$db->prepare('SELECT * FROM docente WHERE usuario=:nombre ');//AND clave=:clave
+				$select->bindValue('nombre',$nombre);			
+				$select->execute();
+				$registro=$select->fetch();
+				$usuario=new Usuario();
+				echo "<br>Clave:".$clave."=".$registro['clave']."<br>";
+				return;
+				//verifica si la clave es conrrecta
+				if (password_verify($clave, $registro['clave'])) {				
+					//si es correcta, asigna los valores que trae desde la base de datos
+					$usuario->setId($registro['Id']);
+					$usuario->setNombre($registro['nombre']);
+					$usuario->setClave($registro['clave']);
+					$usuario->setTipo("DOCENTE");
+				}		
 			}
+			return $usuario;
 		}
-		return $usuario;
-	}
 
-	//busca el nombre del usuario si existe
-	public function buscarUsuario($nombre)
-	{
-		$db = Db::conectar();
-		$select = $db->prepare('SELECT * FROM DOCENTE WHERE usuario=:nombre');
-		$select->bindValue('nombre', $nombre);
-		$select->execute();
-		$registro = $select->fetch();
-		if ($registro['Id'] != NULL) {
-			$usado = False;
-		} else {
-			$usado = True;
+		//busca el nombre del usuario si existe
+		public function buscarUsuario($nombre){
+			$db=Db::conectar();
+			$select=$db->prepare('SELECT * FROM DOCENTE WHERE usuario=:nombre');
+			$select->bindValue('nombre',$nombre);
+			$select->execute();
+			$registro=$select->fetch();
+			if($registro['Id']!=NULL){
+				$usado=False;
+			}else{
+				$usado=True;
+			}	
+			return $usado;
 		}
-		return $usado;
 	}
-}
+?>s

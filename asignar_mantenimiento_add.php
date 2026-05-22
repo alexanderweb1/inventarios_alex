@@ -1,8 +1,6 @@
 <?php
-require_once('cusuario.php');
-require_once('usuario.php');
-require_once("db.php");
-include_once('config.php');
+    require_once('include/usuario.php');
+    require_once('include/cusuario.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -110,8 +108,7 @@ include_once('config.php');
               <th>Artículo</th>
               <th>Fecha Mantenimiento</th>
               <th>Descripción</th>
-              <th>Estado al Ingresar</th>
-              <!-- <th>Fecha de registro</th> -->
+              <th>Estado Ingreso</th>
               <th>Acciones</th>
             </tr>
           </thead>
