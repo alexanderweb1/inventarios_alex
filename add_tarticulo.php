@@ -174,7 +174,6 @@ if (isset($_REQUEST['accion']) and $_REQUEST['accion'] != "") {
               <th colspan=4>Lista de tipos de artículo</th>
             </tr>
             <tr>
-              <th>Nro</th>
               <th>Id.</th>
               <th>Tipo de artículo</th>
               <th>Acciones</th>
@@ -188,7 +187,6 @@ if (isset($_REQUEST['accion']) and $_REQUEST['accion'] != "") {
               <tr>
                 <td><?php echo $ta['id_tipo_articulo']; ?></td>
                 <td><?php echo $ta['tipo_articulo']; ?></td>
-                <td></td>
                 <td>
                   <a href="add_tarticulo.php?accion=EDITAR&id_tipo_articulo=<?php echo $ta['id_tipo_articulo']; ?>" class="text-primary"><i class="bi bi-pencil-square"></i>Editar</a>
                   <a href="add_tarticulo.php?accion=ELIMINAR&id_tipo_articulo=<?php echo $ta['id_tipo_articulo']; ?>" class="text-danger" onClick="return confirm('Desea eliminar?');"><i class="bi bi-trash3-fill"></i>Borrar</a>

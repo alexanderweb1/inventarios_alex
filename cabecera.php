@@ -18,8 +18,10 @@
             <li><a href="registrar_docente_add.php">Docente</a></li>
             <li class="dropdown"><a href="#"><span>Artículo</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
-                <li><a href="add_tarticulo.php">Tipo de artículo</a></li>
-                <li><a href="articulo.php">Adminstrar artículo</a></li>
+                <li><a href="add_tarticulo.php">Tipo de Equipo</a></li>
+                <li><a href="articulo.php">Adminstrar Equipos</a></li>
+                <li><a href="asignar_mantenimiento_add.php">Mantenimiento de equipo</a></li>
+
 
               </ul>
             </li>
@@ -29,7 +31,6 @@
           <ul>
             <li><a href="inventario_add.php">Inventario</a></li>
             <li><a href="asignar_inventario_addJQ.php">Asignar inventario</a></li>
-            <li><a href="asignar_mantenimiento_add.php">Mantenimiento de equipo</a></li>
 
           </ul>
         </li>
