@@ -1,9 +1,9 @@
 <?php
-    require_once('cusuario.php');
-    require_once('usuario.php');
-  //  session_start();
-    require_once("db.php");
-    include_once('config.php');
+require_once('cusuario.php');
+require_once('usuario.php');
+//  session_start();
+require_once("db.php");
+include_once('config.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +45,7 @@
 
 <body class="index-page">
 
-<header id="header" class="header d-flex align-items-center fixed-top">
+  <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
       <nav id="navmenu" class="navmenu">
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -53,9 +53,9 @@
     </div>
   </header>
 
-<?php 
-				require_once('cabecera.php');
-?>
+  <?php
+  require_once('cabecera.php');
+  ?>
 
   <main class="main">
 
@@ -69,19 +69,19 @@
           <h1 data-aos="fade-up">Administrar <span>estado</span></h1>
           <p data-aos="fade-up" data-aos-delay="100">Ingrese los datos del estado<br></p>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-              <form id="form1" name="form1" method="GET" action="estado_acc.php">
-                  <div class="form-group">
-                    <label for="usuario" class="sr-only">Nombre del estado:</label>
-                    <input required  name="estado" id="estado" class="form-control" placeholder="Ingrese el nombre del estado">
-                  </div>
-                  <div class="form-group mb-4">
-                    <label for="password" class="sr-only">estado:</label><br>
-                    <textarea required id="descripcion" name="descripcion" rows="4" cols="50" placeholder="Ingrese la descripción del estado"></textarea>
-                  </div>
-                  
-                  <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Agregar">
-                  
-                </form>          
+            <form id="form1" name="form1" method="GET" action="estado_acc.php">
+              <div class="form-group">
+                <label for="usuario" class="sr-only">Nombre del estado:</label>
+                <input required name="estado" id="estado" class="form-control" placeholder="Ingrese el nombre del estado">
+              </div>
+              <div class="form-group mb-4">
+                <label for="password" class="sr-only">estado:</label><br>
+                <textarea required id="descripcion" name="descripcion" rows="4" cols="50" placeholder="Ingrese la descripción del estado"></textarea>
+              </div>
+
+              <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Agregar">
+
+            </form>
           </div>
         </div>
       </div>
@@ -89,47 +89,47 @@
     <!-- Services Section -->
     <section id="services" class="services section light-background">
       <div class="container">
-      <table class="table table-bordered table-striped">
-              <thead class="thead-dark">
-                <tr class="text-center align-middle">
-                  <th colspan=4>Lista de estados</th>
-                </tr>
-                <tr>
-                  <th>Nro</th>
-                  <th>Estado</th>
-                  <th>Descripción</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-<?php 							
-						$est = $pdo->query("SELECT * FROM estado ");	
-						$estado = $est->fetchAll(PDO::FETCH_OBJ);	
-            foreach ($estado as $est){
-?>
-                <tr>
-                  <td><?php echo $est->id_estado;?></td>
-                  <td><?php echo $est->estado;?></td>
-                  <td><?php echo $est->descripcion;?></td>
-                  <td>
-                      <a href="editar_estado.php?id_estado=<?php echo $est->id_estado;?>" class="text-primary"><i class="fa fa-fw fa-edit"></i> Editar</a> | 
-							        <a href="delete_estado.php?id_estado=<?php echo $est->id_estado;?>" class="text-danger" onClick="return confirm('Desea eliminar el estado?');"><i class="fa fa-fw fa-trash"></i> Eliminar</a>                     
-                  </td>
-                </tr>
-  <?php 
+        <table class="table table-bordered table-striped">
+          <thead class="thead-dark">
+            <tr class="text-center align-middle">
+              <th colspan=4>Lista de estados</th>
+            </tr>
+            <tr>
+              <th>Nro</th>
+              <th>Estado</th>
+              <th>Descripción</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            $est = $pdo->query("SELECT * FROM estado ");
+            $estado = $est->fetchAll(PDO::FETCH_OBJ);
+            foreach ($estado as $est) {
+            ?>
+              <tr>
+                <td><?php echo $est->id_estado; ?></td>
+                <td><?php echo $est->estado; ?></td>
+                <td><?php echo $est->descripcion; ?></td>
+                <td>
+                  <a href="editar_estado.php?id_estado=<?php echo $est->id_estado; ?>" class="text-primary"><i class="fa fa-fw fa-edit"></i> Editar</a> |
+                  <a href="delete_estado.php?id_estado=<?php echo $est->id_estado; ?>" class="text-danger" onClick="return confirm('Desea eliminar el estado?');"><i class="fa fa-fw fa-trash"></i> Eliminar</a>
+                </td>
+              </tr>
+            <?php
             }
-  ?>             
-              </tbody>
-      </table>
-		
+            ?>
+          </tbody>
+        </table>
+
       </div>
     </section><!-- /Services Section -->
 
 
   </main>
-<?php
+  <?php
   require_once('pie.php');
-?>
+  ?>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
