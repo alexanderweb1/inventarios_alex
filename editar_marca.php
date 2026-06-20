@@ -1,17 +1,22 @@
 <?php
-     require_once('cusuario.php');
-     require_once('usuario.php');
-    session_start();
-    require_once("db.php");
-    include_once('config.php');
-    $id_marca=$_REQUEST["id_marca"];
-    
-    $mar = $pdo->query("SELECT * FROM marca WHERE id_marca=$id_marca; ");	
-    $marca = $mar->fetchAll(PDO::FETCH_OBJ);	
-    foreach ($marca as $m){   
-      $nombre=$m->nombre;
-      $descripcion=$m->descripcion;
-    }
+require_once('cusuario.php');
+
+if (isset($_SESSION['usuario'])) {
+} else {
+  session_start();
+}
+
+require_once('usuario.php');
+require_once("db.php");
+include_once('config.php');
+$id_marca = $_REQUEST["id_marca"];
+
+$mar = $pdo->query("SELECT * FROM marca WHERE id_marca=$id_marca;");
+$marca = $mar->fetchAll(PDO::FETCH_OBJ);
+foreach ($marca as $m) {
+  $nombre = $m->nombre;
+  $descripcion = $m->descripcion;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +58,7 @@
 
 <body class="index-page">
 
-<header id="header" class="header d-flex align-items-center fixed-top">
+  <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
       <nav id="navmenu" class="navmenu">
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -61,9 +66,9 @@
     </div>
   </header>
 
-<?php 
-				require_once('cabecera.php');
-?>
+  <?php
+  require_once('cabecera.php');
+  ?>
 
   <main class="main">
 
@@ -77,29 +82,29 @@
           <h1 data-aos="fade-up">Editar <span>marca</span></h1>
           <p data-aos="fade-up" data-aos-delay="100">Ingrese los datos nuevos de la marca<br></p>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-              <form id="form1" name="form1" method="post" action="marca_acc.php">
-                  <div class="form-group">
-                    <label for="usuario" class="sr-only">Nombre de marca:</label>
-                    <input required  name="nombre" id="nombre" class="form-control" value=<?php echo $nombre;?> placeholder="Ingrese el nombre de la marca">
-                    <input type=hidden name="id_marca" id="id_marca"  value="<?php echo $id_marca; ?>" >
-                    <input type=hidden name="accion" id="accion"  value="EDITAR" >
-                  </div>
-                  <div class="form-group mb-4">
-                    <label for="password" class="sr-only">Descripción:</label><br>
-                    <textarea required id="descripcion" name="descripcion" rows="4" cols="50" placeholder="Ingrese la descripción de la marca"><?php echo $descripcion;?></textarea>
-                  </div>
-                  
-                  <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Actualizar">
-                  
-                </form>          
+            <form id="form1" name="form1" method="post" action="marca_acc.php">
+              <div class="form-group">
+                <label for="usuario" class="sr-only">Nombre de marca:</label>
+                <input required name="nombre" id="nombre" class="form-control" value=<?php echo $nombre; ?> placeholder="Ingrese el nombre de la marca">
+                <input type=hidden name="id_marca" id="id_marca" value="<?php echo $id_marca; ?>">
+                <input type=hidden name="accion" id="accion" value="EDITAR">
+              </div>
+              <div class="form-group mb-4">
+                <label for="password" class="sr-only">Descripción:</label><br>
+                <textarea required id="descripcion" name="descripcion" rows="4" cols="50" placeholder="Ingrese la descripción de la marca"><?php echo $descripcion; ?></textarea>
+              </div>
+
+              <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Actualizar">
+
+            </form>
           </div>
         </div>
       </div>
     </section><!-- /Hero Section -->
   </main>
-<?php
+  <?php
   require_once('pie.php');
-?>
+  ?>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

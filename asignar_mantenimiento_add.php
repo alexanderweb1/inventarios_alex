@@ -1,6 +1,6 @@
 <?php
-    require_once('include/usuario.php');
-    require_once('include/cusuario.php');
+require_once('include/usuario.php');
+require_once('include/cusuario.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +55,7 @@
         <div class="d-flex flex-column justify-content-center align-items-center mx-auto">
           <h1 data-aos="fade-up">Asignar <span>mantenimiento</span></h1>
           <p data-aos="fade-up" data-aos-delay="100">a un artículo<br></p>
-          <div class="card shadow-sm p-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="shadow-sm p-4" data-aos="fade-up" data-aos-delay="200">
             <form id="form_mantenimiento" name="form1" method="post" action="asignar_mantenimiento_acc.php" class="text-start d-flex flex-column gap-4">
 
               <div class="form-group">

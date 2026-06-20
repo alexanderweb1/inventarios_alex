@@ -5,8 +5,6 @@ require_once('conexion.php');
 require_once('include/db.php');
 require_once('include/config.php');
 
-
-
 $usuario = $_REQUEST["usuario"];
 //echo "Usuario:".$usuario."<br>";
 $clave = $_REQUEST["clave"];

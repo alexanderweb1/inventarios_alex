@@ -1,8 +1,10 @@
 <?php
-    require_once('usuario.php');
-    session_start();
-    require_once("db.php");
-    include_once('config.php');
+require_once('cusuario.php');
+
+require_once('usuario.php');
+
+require_once("db.php");
+include_once('config.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,9 +45,9 @@
 </head>
 
 <body class="index-page">
-<?php 
-				require_once('cabecera.php');
-?>
+  <?php
+  require_once('cabecera.php');
+  ?>
 
   <main class="main">
 
@@ -59,67 +61,67 @@
           <h1 data-aos="fade-up">Administrar <span>marca</span></h1>
           <p data-aos="fade-up" data-aos-delay="100">Ingrese los datos de la marca<br></p>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-              <form id="form1" name="form1" method="post" action="marca_acc.php">
-                  <div class="form-group">
-                    <label for="usuario" class="sr-only">Nombre de marca:</label>
-                    <input required  name="nombre" id="nombre" class="form-control" placeholder="Ingrese el nombre de la marca">
-                  </div>
-                  <div class="form-group mb-4">
-                    <label for="password" class="sr-only">Descripción:</label><br>
-                    <textarea required id="descripcion" name="descripcion" rows="4" cols="50" placeholder="Ingrese la descripción de la marca"></textarea>
-                  </div>
-                  
-                  <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Agregar">
-                  
-                </form>          
+            <form id="form1" name="form1" method="post" action="marca_acc.php">
+              <div class="form-group">
+                <label for="usuario" class="sr-only">Nombre de marca:</label>
+                <input required name="nombre" id="nombre" class="form-control" placeholder="Ingrese el nombre de la marca">
+              </div>
+              <div class="form-group mb-4">
+                <label for="password" class="sr-only">Descripción:</label><br>
+                <textarea required id="descripcion" name="descripcion" rows="4" cols="50" placeholder="Ingrese la descripción de la marca"></textarea>
+              </div>
+
+              <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Agregar">
+
+            </form>
           </div>
         </div>
       </div>
     </section><!-- /Hero Section -->
-     <!-- Services Section -->
+    <!-- Services Section -->
     <section id="services" class="services section light-background">
       <div class="container">
-      <table class="table table-bordered table-striped">
-              <thead class="thead-dark">
-                <tr class="text-center align-middle">
-                  <th colspan=4>Lista de marcas</th>
-                </tr>
-                <tr>
-                  <th>Nro</th>
-                  <th>Nombre</th>
-                  <th>Descripci&oacute;n</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-<?php 							
-						$mar = $pdo->query("SELECT * FROM marca ");	
-						$marca = $mar->fetchAll(PDO::FETCH_OBJ);	
-            foreach ($marca as $m){
-?>
-                <tr>
-                  <td><?php echo $m->id_marca;?></td>
-                  <td><?php echo $m->nombre;?></td>
-                  <td><?php echo $m->descripcion;?></td>
-                  <td>
-                      <a href="editar_marca.php?id_marca=<?php echo $m->id_marca;?>" class="text-primary"><i class="bi bi-pencil-square"></i>Editar</a> 
-							        <a href="delete_marca.php?id_marca=<?php echo $m->id_marca;?>" class="text-danger" onClick="return confirm('Desea eliminar la marca?');"><i class="bi bi-trash3-fill"></i>Borrar</a>                     
-                  </td>
-                </tr>
- <?php 
+        <table class="table table-bordered table-striped">
+          <thead class="thead-dark">
+            <tr class="text-center align-middle">
+              <th colspan=4>Lista de marcas</th>
+            </tr>
+            <tr>
+              <th>Nro</th>
+              <th>Nombre</th>
+              <th>Descripci&oacute;n</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            $mar = $pdo->query("SELECT * FROM marca ");
+            $marca = $mar->fetchAll(PDO::FETCH_OBJ);
+            foreach ($marca as $m) {
+            ?>
+              <tr>
+                <td><?php echo $m->id_marca; ?></td>
+                <td><?php echo $m->nombre; ?></td>
+                <td><?php echo $m->descripcion; ?></td>
+                <td>
+                  <a href="editar_marca.php?id_marca=<?php echo $m->id_marca; ?>" class="text-primary"><i class="bi bi-pencil-square"></i>Editar</a>
+                  <a href="delete_marca.php?id_marca=<?php echo $m->id_marca; ?>" class="text-danger" onClick="return confirm('Desea eliminar la marca?');"><i class="bi bi-trash3-fill"></i>Borrar</a>
+                </td>
+              </tr>
+            <?php
             }
- ?>             
-              </tbody>
-      </table>
-		
+            ?>
+          </tbody>
+        </table>
+
       </div>
     </section><!-- /Services Section -->
 
 
   </main>
-<?php
+  <?php
   require_once('pie.php');
-?>
+  ?>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
