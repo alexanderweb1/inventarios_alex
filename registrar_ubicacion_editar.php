@@ -1,18 +1,18 @@
 <?php
-    require_once('usuario.php');
-    session_start();
-    require_once("db.php");
-    include_once('config.php');
-    $id_ubicacion=$_REQUEST["id_ubicacion"];
-    
-    $ubi = $pdo_conn->query("SELECT * FROM ubicacion WHERE id_ubicacion=$id_ubicacion; ");	
-    $ubicacion= $ubi->fetchAll(PDO::FETCH_OBJ);
-    foreach ($ubicacion as $ubi){
-      $id_ubicacion=$ubi->id_ubicacion;   
-      $nombre=$ubi->nombre;
-      $descripcion=$ubi->descripcion;
-      $fecha = date("Y-m-d", strtotime($ubi->fecha));
-    }
+require_once('cusuario.php');
+require_once('usuario.php');
+require_once("db.php");
+include_once('config.php');
+$id_ubicacion = $_REQUEST["id_ubicacion"];
+
+$ubi = $pdo_conn->query("SELECT * FROM ubicacion WHERE id_ubicacion=$id_ubicacion; ");
+$ubicacion = $ubi->fetchAll(PDO::FETCH_OBJ);
+foreach ($ubicacion as $ubi) {
+  $id_ubicacion = $ubi->id_ubicacion;
+  $nombre = $ubi->nombre;
+  $descripcion = $ubi->descripcion;
+  $fecha = date("Y-m-d", strtotime($ubi->fecha));
+}
 
 ?>
 
@@ -57,9 +57,9 @@
 <body class="index-page">
 
 
-<?php 
-				require_once('cabecera.php');
-?>
+  <?php
+  require_once('cabecera.php');
+  ?>
 
   <main class="main">
 
@@ -73,34 +73,34 @@
           <h1 data-aos="fade-up">Editar <span>ubicacion</span></h1>
           <p data-aos="fade-up" data-aos-delay="100">Ingrese los datos nuevos de la ubicacion<br></p>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-              <form id="form1" name="form1" method="post" action="registrar_ubicacion_acc.php">
-                  <div class="form-group">
-                    <label for="usuario" class="sr-only">Nombre de ubicacion:</label>
-                    <input required  name="nombre" id="nombre" class="form-control" value="<?php echo $nombre;?>" placeholder="Ingrese el nombre de la marca">
-                    <input type=hidden name="id_ubicacion" id="id_ubicacion"  value="<?php echo $id_ubicacion; ?>" >
-                    <input type=hidden name="accion" id="accion"  value="EDITAR" >
-                  </div>
-                  <div class="form-group">
-                    <label for="password" class="sr-only">Descripción de la ubicación:</label><br>
-                    <textarea required id="descripcion" name="descripcion" rows="4" cols="50" placeholder="Ingrese la descripción de la marca"><?php echo $descripcion;?></textarea>
-                  </div>
+            <form id="form1" name="form1" method="post" action="registrar_ubicacion_acc.php">
+              <div class="form-group">
+                <label for="usuario" class="sr-only">Nombre de ubicacion:</label>
+                <input required name="nombre" id="nombre" class="form-control" value="<?php echo $nombre; ?>" placeholder="Ingrese el nombre de la marca">
+                <input type=hidden name="id_ubicacion" id="id_ubicacion" value="<?php echo $id_ubicacion; ?>">
+                <input type=hidden name="accion" id="accion" value="EDITAR">
+              </div>
+              <div class="form-group">
+                <label for="password" class="sr-only">Descripción de la ubicación:</label><br>
+                <textarea required id="descripcion" name="descripcion" rows="4" cols="50" placeholder="Ingrese la descripción de la marca"><?php echo $descripcion; ?></textarea>
+              </div>
 
-                  <div class="form-group">
-                    <label for="fecha" class="form-label">Fecha de la ubicación:</label>
-                    <input type="date" name="fecha" id="fecha" value="<?php echo $fecha; ?>" class="form-control" required>
-                  </div>
-                  
-                  <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Actualizar">
-                  
-                </form>          
+              <div class="form-group">
+                <label for="fecha" class="form-label">Fecha de la ubicación:</label>
+                <input type="date" name="fecha" id="fecha" value="<?php echo $fecha; ?>" class="form-control" required>
+              </div>
+
+              <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Actualizar">
+
+            </form>
           </div>
         </div>
       </div>
     </section><!-- /Hero Section -->
   </main>
-<?php
+  <?php
   require_once('pie.php');
-?>
+  ?>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

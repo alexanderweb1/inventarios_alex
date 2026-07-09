@@ -1,8 +1,9 @@
 <?php
+require_once('cusuario.php');
 require_once('usuario.php');
-session_start();
 require_once("db.php");
 include_once('config.php');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
