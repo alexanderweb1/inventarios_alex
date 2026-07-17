@@ -34,7 +34,7 @@
 
           </ul>
         </li>
-        <li><a href="index.html#contact">Contacto</a></li>
+        <li><a href="listar_auditoria.php">Auditoría</a></li>
       </ul>
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </nav>

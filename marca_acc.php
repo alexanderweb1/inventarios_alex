@@ -1,5 +1,8 @@
 <?php
 require_once('cusuario.php');
+require_once("usuario.php");
+require_once("db.php");
+require_once("config.php");
 
 $id_marca = $_REQUEST["id_marca"];
 echo "id_marca=$id_marca<br>";

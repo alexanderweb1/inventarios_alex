@@ -88,7 +88,7 @@ include_once('config.php');
         <table class="table table-bordered table-striped">
           <thead class="thead-dark">
             <tr class="text-center align-middle">
-              <th colspan=4>Lista de ubicaciones</th>
+              <th colspan="5">Lista de ubicaciones</th>
             </tr>
             <tr>
               <th>Nro</th>

@@ -1,8 +1,8 @@
 <?php
-require_once('usuario.php');
-session_start();
+require_once('cusuario.php');
+require_once("usuario.php");
 require_once("db.php");
-include_once('config.php');
+require_once("config.php");
 $id_inventario = $_REQUEST["id_inventario"];
 
 $stmt = $pdo_conn->prepare(
