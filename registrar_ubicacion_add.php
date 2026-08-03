@@ -1,8 +1,6 @@
 <?php
 require_once('cusuario.php');
-require_once('usuario.php');
-require_once("db.php");
-include_once('config.php');
+
 
 ?>
 <!DOCTYPE html>

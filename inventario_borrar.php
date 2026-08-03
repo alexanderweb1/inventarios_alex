@@ -1,8 +1,5 @@
 <?php
 require_once('cusuario.php');
-require_once("usuario.php");
-require_once("db.php");
-require_once("config.php");
 
 $id_inventario = $_REQUEST["id_inventario"];
 echo "<br>id_inventario:$id_inventario";
@@ -18,6 +15,7 @@ if (!empty($result)) {
         'modulo' => "MODULO INVENTARIO",
         't_operacion' => "ELIMINAR",
         'descripcion' => $_SESSION['usuario']->getNombre() . " Datos registro Eliminados: id_inventario= $id_inventario",
+
     );
     $insert    =    $db->insert('auditoria', $data);
     if ($insert) {

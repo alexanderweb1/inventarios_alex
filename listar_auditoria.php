@@ -170,7 +170,7 @@ if (isset($_REQUEST['fecha_fin']) and $_REQUEST['fecha_fin'] != "") {
                 <td><?php echo $row->id_auditoria; ?></td>
                 <td><?php echo $row->usuario; ?></td>
                 <td><?php echo $row->t_operacion; ?></td>
-                <td><?php echo $row->descripcion; ?></td>
+                <td><?php echo " Modulo: $row->modulo - Descripción: $row->descripcion"; ?></td>
                 <td><?php echo $row->fecha; ?></td>
 
               </tr>

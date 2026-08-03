@@ -1,6 +1,5 @@
 <?php
-require_once("db.php");
-session_start();
+require_once('cusuario.php');
 
 // Recibir datos del formulario usando REQUEST
 $cedula = $_REQUEST["cedula"];
@@ -61,7 +60,7 @@ if ($action == "EDITAR") {
 
     // Verificar si se ingresó una nueva clave
     if (!empty($clave)) {
-        // Si hay nueva clave, actualizar también la clave
+        // Actualizar incluyendo la nueva clave
         $clave_encriptada = password_hash($clave, PASSWORD_DEFAULT);
 
         $sql = "UPDATE docente 
@@ -102,7 +101,7 @@ if ($action == "EDITAR") {
             ':id_docente' => $id_docente
         ));
     } else {
-        // Si no hay nueva clave, mantener la actual (no actualizar ese campo)
+        // Mantener la clave actual
         $sql = "UPDATE docente 
                 SET cedula = :cedula,
                     apellidos = :apellidos,
@@ -141,6 +140,23 @@ if ($action == "EDITAR") {
     }
 
     if ($result) {
+        // Registro de auditoría
+        $data = array(
+            'usuario' => $_SESSION['usuario']->getUsuario(),
+            'modulo' => "MODULO DOCENTE",
+            't_operacion' => "EDITAR",
+            'descripcion' => $_SESSION['usuario']->getNombre() . " Datos Actualizados: Nombre= $nombre cedula= $cedula correo= $correo telefono= $telefono tel_casa= $tel_casa direccion= $direccion hoja_vida= $hoja_vida usuario= $usuario estado= $estado token= $token status= $status numDias= $numDias coordinador= $coordinador",
+        );
+
+        $insert = $db->insert('auditoria', $data);
+        if ($insert) {
+            echo ('<br>Auditoria Actualizada<br>');
+        } else {
+            echo '<br>Error no pudo registrar la auditoria<br>';
+            return;
+        }
+        //**** */
+
         header('Location: registrar_docente_editar.php?res=editado');
         exit;
     } else {
@@ -179,6 +195,23 @@ if ($action == "EDITAR") {
     ));
 
     if ($result) {
+        // Registro de auditoría
+        $data = array(
+            'usuario' => $_SESSION['usuario']->getUsuario(),
+            'modulo' => "MODULO DOCENTE",
+            't_operacion' => "INSERTAR",
+            'descripcion' => $_SESSION['usuario']->getNombre() . " Datos Insertados: Nombre= $nombre cedula= $cedula correo= $correo telefono= $telefono tel_casa= $tel_casa direccion= $direccion hoja_vida= $hoja_vida usuario= $usuario estado= $estado token= $token status= $status numDias= $numDias coordinador= $coordinador",
+        );
+
+        $insert = $db->insert('auditoria', $data);
+        if ($insert) {
+            echo ('<br>Auditoria registrada<br>');
+        } else {
+            echo '<br>Error no pudo registrar la auditoria<br>';
+            return;
+        }
+        //**** */
+
         header('Location: registrar_docente_add.php?res=guardado');
         exit;
     } else {

@@ -1,5 +1,9 @@
 <?php
 require_once('cusuario.php');
+require_once("usuario.php");
+require_once("db.php");
+require_once("config.php");
+
 date_default_timezone_set('America/Guayaquil');
 
 $id_ubicacion = $_REQUEST["id_ubicacion"];

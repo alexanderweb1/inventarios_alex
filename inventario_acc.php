@@ -14,7 +14,6 @@ echo "nombre=$nombre<br>";
 $descripcion = $_REQUEST["descripcion"];
 echo "descripcion=$descripcion<br>";
 
-
 if ($accion == "EDITAR") {
     $sql = "UPDATE inventario SET nombre=:nombre,descripcion=:descripcion where id_inventario=:id_inventario;";
     $pdo_statement = $pdo_conn->prepare($sql);

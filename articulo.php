@@ -1,8 +1,10 @@
 <?php
-    require_once('usuario.php');
-    session_start();
-    require_once("db.php");
-    include_once('config.php');
+require_once('cusuario.php');
+require_once('usuario.php');
+require_once("db.php");
+include_once('config.php');
+?>
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +46,7 @@
 
 <body class="index-page">
 
-<header id="header" class="header d-flex align-items-center fixed-top">
+  <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
       <nav id="navmenu" class="navmenu">
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -52,19 +54,19 @@
     </div>
   </header>
 
-<?php 
-  if(isset($_REQUEST["error"])){
-    $error=$_REQUEST["error"];
-    
-?>
-  <script>
-      alert("<?php echo $error?>");
-  </script>
-<?php
+  <?php
+  if (isset($_REQUEST["error"])) {
+    $error = $_REQUEST["error"];
+
+  ?>
+    <script>
+      alert("<?php echo $error ?>");
+    </script>
+  <?php
   }
-    
-				require_once('cabecera.php');
-?>
+
+  require_once('cabecera.php');
+  ?>
 
   <main class="main">
 
@@ -78,156 +80,168 @@
           <h1 data-aos="fade-up">Administrar <span>artículo</span></h1>
           <p data-aos="fade-up" data-aos-delay="100">Igrese los artículos<br></p>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-              <form id="form1" name="form1" method="post" action="articulo_acc.php">
-                                  <div class="form-group">
-                    <label for="usuario" class="sr-only">Seleccione un inventario:</label>
-                     <select name="id_inventario" id="id_inventario" class="form-select" aria-label="Default select example">
-                      <option value=0 selected>Elija un inventario</option>
-<?php 							
-                        $mar = $pdo->query("SELECT * FROM inventario; ");	
-                        $inventario = $mar->fetchAll(PDO::FETCH_OBJ);	
-                        foreach ($inventario as $doc){
-?>
-                          <option value="<?php echo $doc->id_inventario;?>"><?php echo $doc->nombre;?></option>
-<?php                   }?>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="usuario" class="sr-only">Seleccione una ubicación:</label>
-                     <select name="id_ubicacion" id="id_ubicacion" class="form-select" aria-label="Default select example">
-                      <option value=0 selected>Elija una ubicación</option>
-<?php 							
-                        $mar = $pdo->query("SELECT * FROM ubicacion; ");	
-                        $ubicacion = $mar->fetchAll(PDO::FETCH_OBJ);	
-                        foreach ($ubicacion as $ubi){
-?>
-                          <option value="<?php echo $ubi->id_ubicacion;?>"><?php echo $ubi->nombre;?></option>
-<?php                   }?>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="usuario" class="sr-only">Seleccione una marca:</label>
-                     <select name="id_marca" id="id_marca" class="form-select" aria-label="Default select example">
-                      <option value=0 selected>Elija una marca</option>
-<?php 							
-                        $mar = $pdo->query("SELECT * FROM marca; ");	
-                        $marca = $mar->fetchAll(PDO::FETCH_OBJ);	
-                        foreach ($marca as $mar){
-?>
-                          <option value="<?php echo $mar->id_marca;?>"><?php echo $mar->nombre;?></option>
-<?php                   }?>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="usuario" class="sr-only">Seleccione un modelo:</label>
-                     <select name="id_modelo" id="id_modelo" class="form-select" aria-label="Default select example">
-                      <option value=0 selected>Elija un modelo</option>
-<?php 							
-                        $mar = $pdo->query("SELECT * FROM modelo; ");	
-                        $modelo = $mar->fetchAll(PDO::FETCH_OBJ);	
-                        foreach ($modelo as $mod){
-?>
-                          <option value="<?php echo $mod->id_modelo;?>"><?php echo $mod->modelo;?></option>
-<?php                   }?>
-                    </select>
-                  </div>                  
-                  <div class="form-group">
-                    <label for="usuario" class="sr-only">Seleccione un tipo de artículo:</label>
-                     <select name="id_tipo_articulo" id="id_tipo_articulo" class="form-select" aria-label="Default select example">
-                      <option value=0 selected>Elija un tipo de artículo</option>
-<?php 							
-                        $mar = $pdo->query("SELECT * FROM tipo_articulo; ");	
-                        $tarticulo = $mar->fetchAll(PDO::FETCH_OBJ);	
-                        foreach ($tarticulo as $tar){
-?>
-                          <option value="<?php echo $tar->id_tipo_articulo;?>"><?php echo $tar->tipo_articulo;?></option>
-<?php                   }?>
-                    </select>
-                  </div>    
-                  
-                  <div class="form-group">
-                    <label for="usuario" class="sr-only">Seleccione el estado del artículo:</label>
-                     <select name="id_estado" id="id_estado" class="form-select" aria-label="Default select example">
-                      <option value=0 selected>Elija el estado del artículo</option>
-<?php 							
-                        $mar = $pdo->query("SELECT * FROM estado; ");	
-                        $estado = $mar->fetchAll(PDO::FETCH_OBJ);	
-                        foreach ($estado as $est){
-?>
-                          <option value="<?php echo $est->id_estado;?>"><?php echo $est->estado;?></option>
-<?php                   }?>
-                    </select>
-                  </div>                                 
-                  <div class="form-group">
-                    <input type="text" required  name="nombre" id="nombre" class="form-control" placeholder="Ingrese el nombre del articulo">
-                    <label for="usuario" class="sr-only">Descripción de la asignaci&oacute;n:</label>
-                    <br><textarea required id="descripcion" name="descripcion" rows="3" cols="50" placeholder="Ingrese la descripción de la asignación"></textarea>
-                    <input type="text" required  name="n_inventario_istms" id="n_inventario_istms" class="form-control" placeholder="Ingrese el número de inventario del articulo">
-                    <input type="text" required  name="v_eco_inicial" id="v_eco_inicial" class="form-control" placeholder="Ingrese el valor económico inicial">
-                    <label for="usuario" class="sr-only">Fecha de adquisición:</label>
-                    <input type="date" required  name="f_adquisicion" id="f_adquisicion" class="form-control" placeholder="Ingrese la fecha de adquisición">
-                    <input required  name="n_serie" id="n_serie" class="form-control" placeholder="Ingrese el número de serie">
-                    <label for="usuario" class="sr-only">Fecha de la baja:</label>
-                    <input type="date"  name="fecha_baja" id="fecha_baja" class="form-control" placeholder="Ingrese la fecha de baja">
-                    <label for="usuario" class="sr-only">Descripción de la baja:</label>
-                    <br><textarea id="descripcion_baja" name="descripcion_baja" rows="3" cols="50" placeholder="Ingrese la descripción de la baja"></textarea>
-                  </div>
-                  <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Asignar">
-                  
-                </form>          
+            <form id="form1" name="form1" method="post" action="articulo_acc.php">
+              <div class="form-group">
+                <label for="usuario" class="sr-only">Seleccione un inventario:</label>
+                <select name="id_inventario" id="id_inventario" class="form-select" aria-label="Default select example">
+                  <option value=0 selected>Elija un inventario</option>
+                  <?php
+                  $mar = $pdo->query("SELECT * FROM inventario; ");
+                  $inventario = $mar->fetchAll(PDO::FETCH_OBJ);
+                  foreach ($inventario as $doc) {
+                  ?>
+                    <option value="<?php echo $doc->id_inventario; ?>"><?php echo $doc->nombre; ?></option>
+                  <?php                   } ?>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="usuario" class="sr-only">Seleccione una ubicación:</label>
+                <select name="id_ubicacion" id="id_ubicacion" class="form-select" aria-label="Default select example">
+                  <option value=0 selected>Elija una ubicación</option>
+                  <?php
+                  $mar = $pdo->query("SELECT * FROM ubicacion; ");
+                  $ubicacion = $mar->fetchAll(PDO::FETCH_OBJ);
+                  foreach ($ubicacion as $ubi) {
+                  ?>
+                    <option value="<?php echo $ubi->id_ubicacion; ?>"><?php echo $ubi->nombre; ?></option>
+                  <?php                   } ?>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="usuario" class="sr-only">Seleccione una marca:</label>
+                <select name="id_marca" id="id_marca" class="form-select" aria-label="Default select example">
+                  <option value=0 selected>Elija una marca</option>
+                  <?php
+                  $mar = $pdo->query("SELECT * FROM marca; ");
+                  $marca = $mar->fetchAll(PDO::FETCH_OBJ);
+                  foreach ($marca as $mar) {
+                  ?>
+                    <option value="<?php echo $mar->id_marca; ?>"><?php echo $mar->nombre; ?></option>
+                  <?php                   } ?>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="usuario" class="sr-only">Seleccione un modelo:</label>
+                <select name="id_modelo" id="id_modelo" class="form-select" aria-label="Default select example">
+                  <option value=0 selected>Elija un modelo</option>
+                  <?php
+                  $mar = $pdo->query("SELECT * FROM modelo; ");
+                  $modelo = $mar->fetchAll(PDO::FETCH_OBJ);
+                  foreach ($modelo as $mod) {
+                  ?>
+                    <option value="<?php echo $mod->id_modelo; ?>"><?php echo $mod->modelo; ?></option>
+                  <?php                   } ?>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="usuario" class="sr-only">Seleccione un tipo de artículo:</label>
+                <select name="id_tipo_articulo" id="id_tipo_articulo" class="form-select" aria-label="Default select example">
+                  <option value=0 selected>Elija un tipo de artículo</option>
+                  <?php
+                  $mar = $pdo->query("SELECT * FROM tipo_articulo; ");
+                  $tarticulo = $mar->fetchAll(PDO::FETCH_OBJ);
+                  foreach ($tarticulo as $tar) {
+                  ?>
+                    <option value="<?php echo $tar->id_tipo_articulo; ?>"><?php echo $tar->tipo_articulo; ?></option>
+                  <?php                   } ?>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="usuario" class="sr-only">Seleccione el estado del artículo:</label>
+                <select name="id_estado" id="id_estado" class="form-select" aria-label="Default select example">
+                  <option value=0 selected>Elija el estado del artículo</option>
+                  <?php
+                  $mar = $pdo->query("SELECT * FROM estado; ");
+                  $estado = $mar->fetchAll(PDO::FETCH_OBJ);
+                  foreach ($estado as $est) {
+                  ?>
+                    <option value="<?php echo $est->id_estado; ?>"><?php echo $est->estado; ?></option>
+                  <?php                   } ?>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="usuario" class="sr-only">Nombre del artículo:</label>
+                <input type="text" required name="nombre" id="nombre" class="form-control" placeholder="Ingrese el nombre del articulo">
+
+                <label for="usuario" class="sr-only">Descripción de la asignaci&oacute;n:</label>
+                <br><textarea required id="descripcion" name="descripcion" rows="3" cols="50" placeholder="Ingrese la descripción de la asignación"></textarea> <br>
+
+                <label for="usuario" class="sr-only">Número de inventario ISTMS:</label>
+                <input type="text" required name="n_inventario_istms" id="n_inventario_istms" class="form-control" placeholder="Ingrese el número de inventario del articulo">
+
+                <label for="usuario" class="sr-only">Valor económico inicial:</label>
+                <input type="text" required name="v_eco_inicial" id="v_eco_inicial" class="form-control" placeholder="Ingrese el valor económico inicial">
+
+                <label for="usuario" class="sr-only">Fecha de adquisición:</label>
+                <input type="date" required name="f_adquisicion" id="f_adquisicion" class="form-control" placeholder="Ingrese la fecha de adquisición">
+
+                <label for="usuario" class="sr-only">Número de serie:</label>
+                <input required name="n_serie" id="n_serie" class="form-control" placeholder="Ingrese el número de serie">
+
+                <label for="usuario" class="sr-only">Fecha de la baja:</label>
+                <input type="date" name="fecha_baja" id="fecha_baja" class="form-control" placeholder="Ingrese la fecha de baja">
+
+                <label for="usuario" class="sr-only">Descripción de la baja:</label>
+                <br><textarea id="descripcion_baja" name="descripcion_baja" rows="3" cols="50" placeholder="Ingrese la descripción de la baja"></textarea>
+              </div>
+
+              <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Asignar">
+
+            </form>
           </div>
         </div>
       </div>
     </section><!-- /Hero Section -->
-     <!-- Services Section -->
+    <!-- Services Section -->
     <section id="services" class="services section light-background">
       <div class="container">
-      <table class="table table-bordered table-striped">
-              <thead class="thead-dark">
-                <tr class="text-center align-middle">
-                  <th colspan=4>Lista de artículos</th>
-                </tr>
-                <tr>
-                  <th>id</th>
-                  <th>Nombre</th>
-                  <th>Nro inventario ISTMS</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-<?php 							
-				  $sql=" SELECT * from articulo; ";
+        <table class="table table-bordered table-striped">
+          <thead class="thead-dark">
+            <tr class="text-center align-middle">
+              <th colspan=4>Lista de artículos</th>
+            </tr>
+            <tr>
+              <th>id</th>
+              <th>Nombre</th>
+              <th>Nro inventario ISTMS</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            $sql = " SELECT * from articulo; ";
 
-          //echo "<br>".$sql."<br>";
-            $mar = $pdo->query($sql);	
-						$articulo = $mar->fetchAll(PDO::FETCH_OBJ);	
-            foreach ($articulo as $art){
-?>
-                <tr>
-                  <td><?php echo $art->id_articulo;?></td>
-                  <td><?php echo $art->nombre;?></td>
-                  <td><?php echo $art->n_inventario_istms;?></td>
-                  <td>
-                      <a href="editar_articulo.php?id_articulo=<?php echo $art->id_articulo;?>" class="text-primary"><i class="bi bi-pencil-square"></i>Editar</a>
-							        <a href="articulo_borrar.php?id_articulo=<?php echo $art->id_articulo;?>" class="text-danger" onClick="return confirm('Desea eliminar la asignacion?');"><i class="bi bi-trash3-fill"></i>Borrar</a> 
-                      <a href="subir_foto.php?id_articulo=<?php echo $art->id_articulo;?>" class="text-primary"><i class="bi bi-card-image"></i>Foto</a>
+            //echo "<br>".$sql."<br>";
+            $mar = $pdo->query($sql);
+            $articulo = $mar->fetchAll(PDO::FETCH_OBJ);
+            foreach ($articulo as $art) {
+            ?>
+              <tr>
+                <td><?php echo $art->id_articulo; ?></td>
+                <td><?php echo $art->nombre; ?></td>
+                <td><?php echo $art->n_inventario_istms; ?></td>
+                <td>
+                  <a href="editar_articulo.php?id_articulo=<?php echo $art->id_articulo; ?>" class="text-primary"><i class="bi bi-pencil-square"></i>Editar</a>
+                  <a href="articulo_borrar.php?id_articulo=<?php echo $art->id_articulo; ?>" class="text-danger" onClick="return confirm('Desea eliminar la asignacion?');"><i class="bi bi-trash3-fill"></i>Borrar</a>
+                  <a href="subir_foto.php?id_articulo=<?php echo $art->id_articulo; ?>" class="text-primary"><i class="bi bi-card-image"></i>Foto</a>
 
-                  </td>
-                </tr>
- <?php 
+                </td>
+              </tr>
+            <?php
             }
- ?>             
-              </tbody>
-      </table>
-		
+            ?>
+          </tbody>
+        </table>
+
       </div>
     </section><!-- /Services Section -->
 
 
   </main>
-<?php
+  <?php
   require_once('pie.php');
-?>
+  ?>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

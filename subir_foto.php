@@ -4,7 +4,7 @@ require_once('include/cusuario.php');
 
 $id_articulo = $_REQUEST["id_articulo"];
 
-echo "<br>id_articulo>$id_articulo";
+//echo "<br>id_articulo>$id_articulo";
 
 if (isset($_REQUEST['submit']) and $_REQUEST['submit'] != "") {
   extract($_REQUEST);
@@ -137,7 +137,7 @@ if (isset($_REQUEST['accion']) and $_REQUEST['accion'] != "") {
               <div class="form-group">
                 <label for="usuario" class="sr-only">Elegir foto de artículo:</label>
                 <input required type="file" name="files[]" multiple class="custom-file-input" id="customFile">
-                <input type="text" name="id_articulo" id="id_articulo" value="<?php echo $id_articulo; ?>">
+                <input type="hidden" name="id_articulo" id="id_articulo" value="<?php echo $id_articulo; ?>">
 
               </div>
               <div class="form-group mb-4">

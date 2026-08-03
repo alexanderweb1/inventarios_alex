@@ -1,8 +1,9 @@
 <?php
+require_once('cusuario.php');
 require_once('usuario.php');
-session_start();
 require_once("db.php");
 include_once('config.php');
+
 
 // Obtener el ID del docente a editar
 $id_docente = isset($_GET['id_docente']) ? $_GET['id_docente'] : 0;
@@ -199,7 +200,7 @@ if (!$docente) {
 
                             <!-- BOTONES -->
                             <div class="d-grid gap-2 d-md-flex justify-content-center mt-4">
-                                
+
                                 <button type="submit" class="btn btn-primary px-5 shadow">
                                     <i class="bi bi-save me-2"></i> Actualizar Docente
                                 </button>

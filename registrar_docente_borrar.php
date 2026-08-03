@@ -1,6 +1,5 @@
 <?php
-require_once("db.php");
-session_start();
+require_once('cusuario.php');
 
 // Obtener el ID del docente a eliminar
 $id_docente = isset($_REQUEST['id_docente']) ? $_REQUEST['id_docente'] : 0;
@@ -22,6 +21,22 @@ if ($id_docente > 0) {
             if ($docente && !empty($docente->hoja_vida) && file_exists($docente->hoja_vida)) {
                 unlink($docente->hoja_vida);
             }
+
+            //****** registro auditoria */
+            $data    =    array(
+                'usuario' => $_SESSION['usuario']->getUsuario(),
+                'modulo' => "MODULO DOCENTE",
+                't_operacion' => "ELIMINAR",
+                'descripcion' => $_SESSION['usuario']->getNombre() . " Datos Eliminados: id_docente= $id_docente",
+            );
+            $insert    =    $db->insert('auditoria', $data);
+            if ($insert) {
+                echo ('<br>Auditoria registrada<br>');
+            } else {
+                echo '<br>Error no pudo registrar la auditoria<br>';
+                return;
+            }
+            //**** */
 
             header('Location: registrar_docente_add.php?res=eliminado');
             exit;
