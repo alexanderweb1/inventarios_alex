@@ -1,6 +1,8 @@
 <?php
-require_once('include/usuario.php');
-require_once('include/cusuario.php');
+require_once('cusuario.php');
+require_once('usuario.php');
+require_once("db.php");
+include_once('config.php');
 
 if (isset($_REQUEST['submit']) and $_REQUEST['submit'] != "") {
   extract($_REQUEST);
@@ -10,7 +12,22 @@ if (isset($_REQUEST['submit']) and $_REQUEST['submit'] != "") {
       'tipo_articulo' => $tipo_articulo,
     );
     $update  =  $db->update('tipo_articulo', $data, array('id_tipo_articulo' => $id_tipo_articulo));
-    if ($insert) {
+    if ($update) {
+      //****** registro auditoria */
+      $data    =    array(
+        'usuario' => $_SESSION['usuario']->getUsuario(),
+        'modulo' => "MODULO TIPO ARTICULO",
+        't_operacion' => "EDITAR",
+        'descripcion' => $_SESSION['usuario']->getNombre() . " Datos Actualizados: tipo_articulo= $tipo_articulo",
+      );
+      $insert    =    $db->insert('auditoria', $data);
+      if ($insert) {
+        echo ('<br>Auditoria registrada<br>');
+      } else {
+        echo '<br>Error no pudo insertarse la auditoria<br>';
+        return;
+      }
+      //**** */
       header('location:add_tarticulo.php?msg=edi');
       exit;
     } else {
@@ -25,6 +42,21 @@ if (isset($_REQUEST['submit']) and $_REQUEST['submit'] != "") {
     $insert  =  $db->insert('tipo_articulo', $data);
 
     if ($insert) {
+      //****** registro auditoria */
+      $data    =    array(
+        'usuario' => $_SESSION['usuario']->getUsuario(),
+        'modulo' => "MODULO TIPO ARTICULO",
+        't_operacion' => "INSERTAR",
+        'descripcion' => $_SESSION['usuario']->getNombre() . " Datos Insertados: tipo_articulo= $tipo_articulo",
+      );
+      $insert    =    $db->insert('auditoria', $data);
+      if ($insert) {
+        echo ('<br>Auditoria registrada<br>');
+      } else {
+        echo '<br>Error no pudo insertarse la auditoria<br>';
+        return;
+      }
+      //**** */
       header('location:add_tarticulo.php?msg=ras');
       exit;
     } else {
@@ -43,6 +75,21 @@ if (isset($_REQUEST['accion']) and $_REQUEST['accion'] != "") {
     );
     $delete  =  $db->delete('tipo_articulo', $data);
     if ($delete) {
+      //****** registro auditoria */
+      $data    =    array(
+        'usuario' => $_SESSION['usuario']->getUsuario(),
+        'modulo' => "MODULO TIPO ARTICULO",
+        't_operacion' => "ELIMINAR",
+        'descripcion' => $_SESSION['usuario']->getNombre() . " Datos Eliminados: id_tipo_articulo= $id_tipo_articulo",
+      );
+      $insert    =    $db->insert('auditoria', $data);
+      if ($insert) {
+        echo ('<br>Auditoria registrada<br>');
+      } else {
+        echo '<br>Error no pudo insertarse la auditoria<br>';
+        return;
+      }
+      //**** */
       header('location:add_tarticulo.php?msg=del');
       exit;
     } else {
