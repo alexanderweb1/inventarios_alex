@@ -1,16 +1,28 @@
 <?php
+require_once('cusuario.php');
 require_once('usuario.php');
-session_start();
 require_once("db.php");
 include_once('config.php');
+$id_ubicacion = $_REQUEST["id_ubicacion"];
+
+$ubi = $pdo_conn->query("SELECT * FROM ubicacion WHERE id_ubicacion=$id_ubicacion; ");
+$ubicacion = $ubi->fetchAll(PDO::FETCH_OBJ);
+foreach ($ubicacion as $ubi) {
+  $id_ubicacion = $ubi->id_ubicacion;
+  $nombre = $ubi->nombre;
+  $descripcion = $ubi->descripcion;
+  $fecha = date("Y-m-d", strtotime($ubi->fecha));
+}
+
 ?>
+
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Sistema de inventarios - Ingreso usuarios </title>
+  <title>Sistema de inventarios - Editar ubicacion </title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -44,13 +56,10 @@ include_once('config.php');
 
 <body class="index-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-      <nav id="navmenu" class="navmenu">
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-    </div>
-  </header>
+
+  <?php
+  require_once('cabecera.php');
+  ?>
 
   <main class="main">
 
@@ -61,35 +70,37 @@ include_once('config.php');
       </div>
       <div class="container text-center">
         <div class="d-flex flex-column justify-content-center align-items-center">
-          <h1 data-aos="fade-up">Ingreso al sistema <span>Inventarios</span></h1>
-          <p data-aos="fade-up" data-aos-delay="100">Utilice un usuario valido<br></p>
+          <h1 data-aos="fade-up">Editar <span>ubicacion</span></h1>
+          <p data-aos="fade-up" data-aos-delay="100">Ingrese los datos nuevos de la ubicacion<br></p>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-            <form id="form1" name="form1" method="post" action="controller_login.php">
+            <form id="form1" name="form1" method="post" action="registrar_ubicacion_acc.php">
               <div class="form-group">
-                <label for="usuario" class="sr-only">Usuario</label>
-                <input name="usuario" id="usuario" class="form-control" placeholder="Ingrese su usuario">
+                <label for="usuario" class="sr-only">Nombre de ubicacion:</label>
+                <input required name="nombre" id="nombre" class="form-control" value="<?php echo $nombre; ?>" placeholder="Ingrese el nombre de la marca">
+                <input type=hidden name="id_ubicacion" id="id_ubicacion" value="<?php echo $id_ubicacion; ?>">
+                <input type=hidden name="accion" id="accion" value="EDITAR">
               </div>
-              <div class="form-group mb-4">
-                <label for="password" class="sr-only">Clave</label>
-                <input name="clave" type="password" id="clave" class="form-control" placeholder="***********">
-                <input name="entrar" type="hidden" id="entrar" value="entrar" />
-                <input name="tipo" type="hidden" id="tipo" value="DOCENTE" />
+              <div class="form-group">
+                <label for="password" class="sr-only">Descripción de la ubicación:</label><br>
+                <textarea required id="descripcion" name="descripcion" rows="4" cols="50" placeholder="Ingrese la descripción de la marca"><?php echo $descripcion; ?></textarea>
               </div>
 
-              <input name="login" id="login" class="btn btn-block login-btn mb-4" type="submit" value="Ingresar">
+              <div class="form-group">
+                <label for="fecha" class="form-label">Fecha de la ubicación:</label>
+                <input type="date" name="fecha" id="fecha" value="<?php echo $fecha; ?>" class="form-control" required>
+              </div>
+
+              <input name="agregar" id="agregar" class="btn btn-block login-btn mb-4" type="submit" value="Actualizar">
 
             </form>
           </div>
         </div>
       </div>
-
     </section><!-- /Hero Section -->
-
-
-
   </main>
-
-
+  <?php
+  require_once('pie.php');
+  ?>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
